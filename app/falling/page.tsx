@@ -3,6 +3,9 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+const SONG_STREAMING_URL =
+  "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
+
 export default async function Index() {
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
@@ -15,9 +18,7 @@ export default async function Index() {
   }
   return (
     <div>
-      <HLSAudioPlayer
-        src={"https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8"}
-      />
+      <HLSAudioPlayer src={SONG_STREAMING_URL} />
     </div>
   );
 }

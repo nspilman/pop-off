@@ -15,8 +15,10 @@ const HLSAudioPlayer = ({ src }: Props) => {
       const hls = new Hls();
       hls.loadSource(src);
       hls.attachMedia(audioRef.current);
+      audioRef.current.play();
     } else if (audioRef.current?.canPlayType("application/vnd.apple.mpegurl")) {
       audioRef.current.src = src;
+      audioRef.current.play();
     }
   }, [src]);
 
