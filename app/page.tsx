@@ -12,7 +12,7 @@ export default async function Index() {
 
     const redirect = encodeURIComponent("/falling");
 
-    const { data, error } = await supabaseClient.auth.signInWithOtp({
+    const { error } = await supabaseClient.auth.signInWithOtp({
       email: email?.toString() || "",
       options: {
         emailRedirectTo: `${origin}/auth/callback?redirect=${redirect}`,
