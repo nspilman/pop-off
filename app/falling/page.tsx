@@ -2,13 +2,16 @@ import HLSAudioPlayer from "@/components/HLSAudioPlayer";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-
-const SONG_STREAMING_URL =
-  "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
+import { SONG_ID } from "../constants";
 
 export default async function Index() {
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
+
+  const { data: songInfo } = await supabaseClient
+    .from("songs")
+    .select("url")
+    .filter("song_id", "eq", SONG_ID);
 
   const {
     data: { session },
@@ -16,9 +19,11 @@ export default async function Index() {
   if (!session) {
     return redirect("/");
   }
+
+  const url = songInfo?.[0].url;
   return (
     <div>
-      <HLSAudioPlayer src={SONG_STREAMING_URL} />
+      <HLSAudioPlayer src={url} />
     </div>
   );
 }
