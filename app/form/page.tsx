@@ -91,7 +91,6 @@ export default async function Form() {
     })
   );
 
-  console.log({ formSections });
   // - Share this site with friends
   // 	- Listen to the song the whole way through on Spotify at least once on Launch Day.
   // 	- Listen to the song the whole way through at least once on launch Day
@@ -103,54 +102,6 @@ export default async function Form() {
   // 	- Use the song in a video on YouTube Shorts
   // 	- Use the song in a video on TikTok
   // 	- Use the song in a video on Instagram Reels
-  const sections1 = [
-    {
-      title: "Pioneer",
-      choices: [
-        { label: "Share this site with friends" },
-        {
-          label:
-            "Listen to the song the whole way through on Spotify at least once on Launch Day",
-        },
-        {
-          label:
-            "Listen to the song the whole way through at least once on launch Day",
-        },
-      ],
-    },
-    {
-      title: "We out here",
-      choices: [
-        { label: "Put the song on a Spotify playlist" },
-        { label: "Put the song on an Apple Music playlist" },
-        { label: "Share the song on Instagram" },
-        { label: "Share the song on Twitter" },
-        { label: "Share the song on Threads" },
-        { label: "Use the song in a video on YouTube Shorts" },
-        { label: "Use the song in a video on TikTok" },
-        { label: "Use the song in a video on Instagram Reels" },
-      ],
-    },
-  ];
-  const choices = [
-    { label: "Share this site with friends" },
-    {
-      label:
-        "Listen to the song the whole way through on Spotify at least once on Launch Day",
-    },
-    {
-      label:
-        "Listen to the song the whole way through at least once on launch Day",
-    },
-    { label: "Put the song on a Spotify playlist" },
-    { label: "Put the song on an Apple Music playlist" },
-    { label: "Share the song on Instagram" },
-    { label: "Share the song on Twitter" },
-    { label: "Share the song on Threads" },
-    { label: "Use the song in a video on YouTube Shorts" },
-    { label: "Use the song in a video on TikTok" },
-    { label: "Use the song in a video on Instagram Reels" },
-  ];
 
   return (
     <MultiSelectForm sections={sections} action={updatedActionWithSongId} />
