@@ -3,6 +3,7 @@ import { handleVolunteerFormSubmission } from "../actions";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { SONG_ID } from "../constants";
+import { redirect } from "next/navigation";
 
 type OptionsReturn = {
   volunteer_option_id: string;
@@ -18,6 +19,14 @@ type OptionsReturn = {
 export default async function Form() {
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
+
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+  if (!session) {
+    return redirect("/");
+  }
+
   const { data, error, status } = await supabaseClient.from("volunteer_options")
     .select(`
       volunteer_option_id,
