@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies, headers } from "next/headers";
+import { SONG_ID } from "../constants";
 
 export async function sendSignInLinkToEmail(formData: FormData) {
   "use server";
@@ -50,6 +51,43 @@ export async function handleVolunteerFormSubmission(
 
   const { error } = await supabaseClient
     .from("user_volunteer_activities")
+    .insert(selected);
+
+  console.log({
+    error,
+    deleteError,
+  });
+}
+
+export async function submitListenerFeedback(formData: FormData) {
+  "use server";
+  const cookieStore = cookies();
+  const supabaseClient = await createClient(cookieStore);
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+  const keys = Array.from(formData.keys()).filter(
+    (key) => !key.startsWith("$ACTION")
+  );
+
+  const userId = session?.user.id || "";
+
+  const selected = {
+    additional_feedback: formData.get("additional_feedback"),
+    similar_artists_or_songs: formData.get("similar_artists_or_songs"),
+    song_id: SONG_ID,
+    user_id: userId,
+  };
+
+  const { error: deleteError } = await supabaseClient
+    .from("listener_feedback")
+    .delete()
+    .filter("user_id", "eq", userId)
+    .filter("song_id", "eq", SONG_ID);
+
+  console.log({ selected });
+  const { error } = await supabaseClient
+    .from("listener_feedback")
     .insert(selected);
 
   console.log({

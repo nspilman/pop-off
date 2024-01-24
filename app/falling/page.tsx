@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { SVGProps } from "react";
 import RootLayout from "../layout";
+import { AdditionalFeedbackForm } from "@/components/AdditionalFeedbackForm";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -79,6 +80,7 @@ export default async function Index() {
               together!
             </p>
           </section>
+          <AdditionalFeedbackForm />
         </main>
         <footer className="px-4 lg:px-6 h-14 flex items-center">
           <p className="text-xs text-gray-500">
