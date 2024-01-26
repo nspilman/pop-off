@@ -19,9 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center lg:p-20">
+        <div className="min-h-screen flex flex-col items-center lg:p-20">
           {children}
-        </main>
+        </div>
       </body>
     </html>
   );

@@ -1,6 +1,17 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies, headers } from "next/headers";
 import { SONG_ID } from "../constants";
+import { redirect } from "next/navigation";
+import { EMAIL_FORM_ERRORS } from "@/constants";
+
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+}
+
+const showError = (errorMessage: string) => {
+  redirect(`./?error=${errorMessage}`);
+};
 
 export async function sendSignInLinkToEmail(formData: FormData) {
   "use server";
@@ -8,16 +19,26 @@ export async function sendSignInLinkToEmail(formData: FormData) {
   const supabaseClient = await createClient(cookieStore);
   const origin = headers().get("origin");
 
-  const email = formData.get("email");
+  const email = formData.get("email")?.toString();
+  if (!email) {
+    return showError(EMAIL_FORM_ERRORS.MISSING_EMAIL);
+  }
 
-  const redirect = encodeURIComponent("/falling");
+  if (!isValidEmail(email)) {
+    return showError(EMAIL_FORM_ERRORS.MALFORMATTED_EMAIL);
+  }
+
+  const redirectUrl = encodeURIComponent("/falling");
 
   const { error } = await supabaseClient.auth.signInWithOtp({
-    email: email?.toString() || "",
+    email,
     options: {
-      emailRedirectTo: `${origin}/auth/callback?redirect=${redirect}`,
+      emailRedirectTo: `${origin}/auth/callback?redirect=${redirectUrl}`,
     },
   });
+  if (error) {
+    showError(error.message);
+  }
   console.log({ error });
 }
 

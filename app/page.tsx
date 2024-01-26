@@ -1,15 +1,23 @@
-import { sendSignInLinkToEmail } from "./actions";
+"use server";
 import RootLayout from "./layout";
+import { EmailSignupForm } from "@/components/Forms/EmailSignupForm";
 
-export default async function Index() {
+export default async function Index({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   /**
    * v0 by Vercel.
    * @see https://v0.dev/t/TDGinAF7oTV
    * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
    */
+
+  const error = searchParams?.error as string;
+
   return (
     <RootLayout>
-      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-[#f5f5f5] px-8">
+      <div className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-[#f5f5f5] px-8">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
             <img
@@ -18,7 +26,7 @@ export default async function Index() {
               height="550"
               src="https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/IMG_2890.jpg"
               width="310"
-            />
+            ></img>
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-black">
@@ -30,17 +38,7 @@ export default async function Index() {
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2">
-                <form className="flex space-x-2" action={sendSignInLinkToEmail}>
-                  <input
-                    className="max-w-lg flex-1 text-black"
-                    placeholder="Enter your email"
-                    type="email"
-                    name="email"
-                  />
-                  <button type="submit" className="border  text-black">
-                    Sign Up
-                  </button>
-                </form>
+                <EmailSignupForm error={error} />
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Sign up to get notified when the song is released.
                 </p>
@@ -57,22 +55,7 @@ export default async function Index() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </RootLayout>
   );
 }
-
-// <div className="flex-1 w-full flex flex-col gap-20 items-center">
-//   <div>
-//     <form action={sendSignInLinkToEmail}>
-//       <input name="email" type="email" />
-//       <button type="submit">submit</button>
-//     </form>
-//   </div>
-
-//   <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
-//     Footer
-//   </footer>
-// </div>
-// );
-// }
