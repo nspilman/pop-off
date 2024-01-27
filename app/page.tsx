@@ -14,6 +14,7 @@ export default async function Index({
    */
 
   const error = searchParams?.error as string;
+  const referral = searchParams?.referral as string;
 
   return (
     <RootLayout>
@@ -38,7 +39,7 @@ export default async function Index({
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2">
-                <EmailSignupForm error={error} />
+                <EmailSignupForm error={error} referral={referral} />
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Sign up to get notified when the song is released.
                 </p>

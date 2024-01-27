@@ -6,6 +6,8 @@ import Link from "next/link";
 import { SVGProps } from "react";
 import RootLayout from "../layout";
 import { AdditionalFeedbackForm } from "@/components/AdditionalFeedbackForm";
+import { generateShareToken } from "@/utils/generateShareLink";
+import { CopyShareLink } from "@/components/CopyShareLink";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -20,6 +22,9 @@ export default async function Index() {
   if (!session) {
     return redirect("/");
   }
+
+  const shareLink = await generateShareToken();
+
   return (
     <RootLayout>
       <div className="flex flex-col min-h-screen bg-black text-white">
@@ -42,6 +47,7 @@ export default async function Index() {
             <div className="mt-8">
               <div className="w-full" />
             </div>
+            <CopyShareLink link={shareLink} />
             <div className="mt-8">
               <Link
                 className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"

@@ -29,11 +29,14 @@ export async function sendSignInLinkToEmail(formData: FormData) {
   }
 
   const redirectUrl = encodeURIComponent("/falling");
+  const referral = formData.get("referral")?.toString();
 
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${origin}/auth/callback?redirect=${redirectUrl}`,
+      emailRedirectTo: `${origin}/auth/callback?redirect=${redirectUrl}${
+        referral ? "&referral=" + referral : ""
+      }`,
     },
   });
   if (error) {
@@ -106,7 +109,6 @@ export async function submitListenerFeedback(formData: FormData) {
     .filter("user_id", "eq", userId)
     .filter("song_id", "eq", SONG_ID);
 
-  console.log({ selected });
   const { error } = await supabaseClient
     .from("listener_feedback")
     .insert(selected);
