@@ -5,7 +5,7 @@ import React from "react";
 
 interface Section {
   title: string;
-  choices: { label: string; id: string }[];
+  choices: { label: string; id: string; selected: boolean }[];
 }
 
 interface Props {
@@ -15,10 +15,10 @@ interface Props {
 
 const MultiSelectForm = ({ sections, action }: Props) => {
   return (
-    <form action={action}>
+    <form action={action} className="text-lg">
       {sections.map((section, index) => (
         <div>
-          <span>{section.title}</span>
+          <h3 className="py-1 font-bold">{section.title}</h3>
           {section.choices.map((choice) => (
             <div>
               <input
@@ -27,8 +27,11 @@ const MultiSelectForm = ({ sections, action }: Props) => {
                 id={choice.label}
                 value={choice.id}
                 name={choice.label}
+                defaultChecked={choice.selected}
               />
-              <label htmlFor={choice.label}>{choice.label}</label>
+              <label htmlFor={choice.label} className="px-2">
+                {choice.label}
+              </label>
             </div>
           ))}
         </div>
