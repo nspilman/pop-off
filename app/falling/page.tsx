@@ -8,6 +8,7 @@ import RootLayout from "../layout";
 import { AdditionalFeedbackForm } from "@/components/AdditionalFeedbackForm";
 import { generateShareToken } from "@/utils/generateShareLink";
 import { CopyShareLink } from "@/components/CopyShareLink";
+import { UnsubscribeForm } from "@/components/Forms/UnsubscribeForm/UnsubscribeForm";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -87,6 +88,7 @@ export default async function Index() {
             </p>
           </section>
           <AdditionalFeedbackForm />
+          <UnsubscribeForm />
         </main>
         <footer className="px-4 lg:px-6 h-14 flex items-center">
           <p className="text-xs text-gray-500">
