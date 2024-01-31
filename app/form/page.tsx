@@ -8,12 +8,8 @@ import { redirect } from "next/navigation";
 type OptionsReturn = {
   volunteer_option_id: string;
   description: string;
-  volunteer_option_to_category: {
-    volunteer_category_id: string;
-    volunteer_category: {
-      description: string;
-    };
-  }[];
+  category: string;
+  default_selected: string;
 };
 
 export default async function Form() {
@@ -31,13 +27,14 @@ export default async function Form() {
     .select(`
       volunteer_option_id,
       description,
-      volunteer_option_to_category (
-          volunteer_category_id,
-          volunteer_category (
-              description
-          )
-      )
+      category,
+      default_selected
   `);
+
+  const { data: alreadySelected } = await supabaseClient
+    .from("user_volunteer_activities")
+    .select("volunteer_type_id")
+    .filter("user_id", "eq", session.user.id);
 
   const { data: songInfo } = await supabaseClient
     .from("songs")
@@ -52,32 +49,38 @@ export default async function Form() {
     ({
       volunteer_option_id,
       description: optionDescription,
-      volunteer_option_to_category,
+      category,
+      default_selected,
     }) => {
-      const { volunteer_category_id, volunteer_category } =
-        volunteer_option_to_category[0];
-      const { description: categoryTitle } = volunteer_category;
+      const selected =
+        alreadySelected?.some(
+          (val) => val.volunteer_type_id === volunteer_option_id
+        ) || false;
+
       return {
         volunteer_option_id,
         optionDescription,
-        categoryTitle,
-        volunteer_category_id,
+        category,
+        default_selected: alreadySelected?.length
+          ? selected
+          : JSON.parse(default_selected),
       };
     }
   );
 
   interface CategoryChoices {
-    [key: string]: { label: string; id: string }[];
+    [key: string]: { label: string; id: string; selected: boolean }[];
   }
 
   const groupedByCategory = formSections.reduce(
     (acc: CategoryChoices, item) => {
-      if (!acc[item.categoryTitle]) {
-        acc[item.categoryTitle] = [];
+      if (!acc[item.category]) {
+        acc[item.category] = [];
       }
-      acc[item.categoryTitle].push({
+      acc[item.category].push({
         label: item.optionDescription,
         id: item.volunteer_option_id,
+        selected: item.default_selected,
       });
       return acc;
     },
@@ -87,7 +90,9 @@ export default async function Form() {
   const sections = Object.entries(groupedByCategory).map(
     ([title, choices]) => ({
       title,
-      choices,
+      choices: choices.toSorted((a, b) =>
+        a.selected ? (b.selected ? 0 : -1) : 1
+      ),
     })
   );
 
