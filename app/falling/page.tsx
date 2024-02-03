@@ -9,6 +9,9 @@ import { AdditionalFeedbackForm } from "@/components/AdditionalFeedbackForm";
 import { generateShareToken } from "@/utils/generateShareLink";
 import { CopyShareLink } from "@/components/CopyShareLink";
 import { UnsubscribeForm } from "@/components/Forms/UnsubscribeForm/UnsubscribeForm";
+import { getVolunteerFormOptions } from "@/utils/getVolunteerFormOptions";
+import { handleVolunteerFormSubmission } from "../actions";
+import MultiSelectForm from "@/components/MultiselectForm";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -23,6 +26,12 @@ export default async function Index() {
   if (!session) {
     return redirect("/");
   }
+
+  const { sections, songInfo } = await getVolunteerFormOptions(session.user.id);
+  const updatedActionWithSongId = handleVolunteerFormSubmission.bind(
+    null,
+    songInfo ? songInfo[0].song_id : ""
+  );
 
   const shareLink = await generateShareToken();
 
@@ -77,6 +86,10 @@ export default async function Index() {
               </Link>
             </div>
           </section>
+          <MultiSelectForm
+            sections={sections}
+            action={updatedActionWithSongId}
+          />
           <section className="w-full max-w-md mx-auto mt-12 text-center">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
               Join the Launch

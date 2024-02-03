@@ -1,5 +1,7 @@
+"use client";
 // MultiSelectForm.tsx
 import React from "react";
+import { useFormStatus } from "react-dom";
 
 // Assuming choices is imported or defined here
 
@@ -15,7 +17,22 @@ interface Props {
 
 const MultiSelectForm = ({ sections, action }: Props) => {
   return (
-    <form action={action} className="text-lg">
+    <>
+      <form action={action} className="text-lg">
+        <FormBody sections={sections} />
+        <button type="submit">Submit</button>
+      </form>
+    </>
+  );
+};
+
+const FormBody = ({ sections }: Pick<Props, "sections">) => {
+  const { pending } = useFormStatus();
+
+  console.log({ pending });
+
+  return (
+    <>
       {sections.map((section, index) => (
         <div>
           <h3 className="py-1 font-bold">{section.title}</h3>
@@ -36,8 +53,7 @@ const MultiSelectForm = ({ sections, action }: Props) => {
           ))}
         </div>
       ))}
-      <button type="submit">Submit</button>
-    </form>
+    </>
   );
 };
 

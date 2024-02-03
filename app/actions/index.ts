@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { SONG_ID } from "../constants";
 import { redirect } from "next/navigation";
 import { EMAIL_FORM_ERRORS } from "@/constants";
@@ -17,7 +17,6 @@ export async function sendSignInLinkToEmail(formData: FormData) {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
-  const origin = headers().get("origin");
 
   const email = formData.get("email")?.toString();
   if (!email) {
@@ -31,14 +30,16 @@ export async function sendSignInLinkToEmail(formData: FormData) {
   const redirectUrl = encodeURIComponent("/falling");
   const referral = formData.get("referral")?.toString();
 
+  const emailRedirectTo = `${
+    process.env.NEXT_PUBLIC_BASE_URL
+  }/auth/callback?redirect=${redirectUrl}${
+    referral ? "&referral=" + referral : ""
+  }`;
+
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${
-        process.env.NEXT_PUBLIC_BASE_URL
-      }/auth/callback?redirect=${redirectUrl}${
-        referral ? "&referral=" + referral : ""
-      }`,
+      emailRedirectTo,
     },
   });
   if (error) {
