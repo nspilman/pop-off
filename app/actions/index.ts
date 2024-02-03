@@ -34,7 +34,9 @@ export async function sendSignInLinkToEmail(formData: FormData) {
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${origin}/auth/callback?redirect=${redirectUrl}${
+      emailRedirectTo: `${
+        process.env.NEXT_PUBLIC_BASE_URL
+      }/auth/callback?redirect=${redirectUrl}${
         referral ? "&referral=" + referral : ""
       }`,
     },
