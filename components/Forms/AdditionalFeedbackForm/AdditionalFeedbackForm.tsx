@@ -1,14 +1,15 @@
 import { submitListenerFeedback } from "@/app/actions";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { getAdditionalFeedbackFormOptions } from "./getVolunteerFormOptions";
+import { getAdditionalFeedbackFormOptions } from "./getAdditionalFeedbackFormOptions";
 
 interface Props {
   userId: string;
 }
 
 export const AdditionalFeedbackForm = async ({ userId }: Props) => {
-  const { formSections } = await getAdditionalFeedbackFormOptions(userId);
+  const { formSections, userAlreadySubmitted } =
+    await getAdditionalFeedbackFormOptions(userId);
 
   return (
     <div className="space-y-8">
@@ -27,11 +28,13 @@ export const AdditionalFeedbackForm = async ({ userId }: Props) => {
               name={field.id}
               placeholder={field.placeholder}
               className="text-black p-2 rounded"
+              defaultValue={field.defaultValue}
+              disabled={userAlreadySubmitted}
             />
           </div>
         ))}
 
-        <button>Send Suggestion</button>
+        <button disabled={userAlreadySubmitted}>Send Suggestion</button>
       </form>
     </div>
   );

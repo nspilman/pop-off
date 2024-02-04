@@ -23,13 +23,16 @@ export const getAdditionalFeedbackFormOptions = async (userId: string) => {
     .select("field_id, response_value")
     .filter("user_id", "eq", userId);
 
+  console.log({ alreadySelected, data });
+
   const { data: songInfo } = await supabaseClient
     .from("songs")
     .select("song_id")
     .filter("song_id", "eq", SONG_ID);
 
-  const formSections = (data as unknown as MarketResearchField[]).map(
-    ({ id, label, placeholder, order }) => {
+  const formSections = (data as unknown as MarketResearchField[])
+    .toSorted((a, b) => a.order - b.order)
+    .map(({ id, label, placeholder, order }) => {
       const existingValue =
         alreadySelected?.find((val) => val.field_id === id)?.response_value ||
         "";
@@ -41,8 +44,9 @@ export const getAdditionalFeedbackFormOptions = async (userId: string) => {
         order,
         defaultValue: existingValue,
       };
-    }
-  );
+    });
 
-  return { formSections, songInfo };
+  const userAlreadySubmitted = formSections.some((field) => field.defaultValue);
+
+  return { formSections, songInfo, userAlreadySubmitted };
 };

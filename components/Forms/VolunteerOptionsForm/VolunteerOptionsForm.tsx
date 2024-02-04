@@ -7,13 +7,18 @@ interface Props {
 }
 
 export const VolunteerOptionsForm = async ({ userId }: Props) => {
-  const { sections, songInfo } = await getVolunteerFormOptions(userId);
-  const updatedActionWithSongId = handleVolunteerFormSubmission.bind(
-    null,
-    songInfo ? songInfo[0].song_id : ""
-  );
+  const { sections, songInfo, userAlreadySubmitted } =
+    await getVolunteerFormOptions(userId);
+  const updatedActionWithSongId = handleVolunteerFormSubmission.bind(null, {
+    songId: songInfo ? songInfo[0].song_id : "",
+    userId,
+  });
 
   return (
-    <MultiSelectForm sections={sections} action={updatedActionWithSongId} />
+    <MultiSelectForm
+      sections={sections}
+      action={updatedActionWithSongId}
+      alreadySubmitted={userAlreadySubmitted}
+    />
   );
 };

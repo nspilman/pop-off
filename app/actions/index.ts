@@ -49,20 +49,17 @@ export async function sendSignInLinkToEmail(formData: FormData) {
 }
 
 export async function handleVolunteerFormSubmission(
-  songId: string,
+  vars: { songId: string; userId: string },
   formData: FormData
 ) {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
-  const {
-    data: { session },
-  } = await supabaseClient.auth.getSession();
   const keys = Array.from(formData.keys()).filter(
     (key) => !key.startsWith("$ACTION")
   );
 
-  const userId = session?.user.id || "";
+  const { songId, userId } = vars;
 
   const selected = keys.map((key) => ({
     volunteer_type_id: formData.get(key),

@@ -13,24 +13,26 @@ interface Section {
 interface Props {
   sections: Section[];
   action: (formData: FormData) => void;
+  alreadySubmitted: boolean;
 }
 
-const MultiSelectForm = ({ sections, action }: Props) => {
+const MultiSelectForm = ({ sections, action, alreadySubmitted }: Props) => {
   return (
     <>
       <form action={action} className="text-lg">
-        <FormBody sections={sections} />
-        <button type="submit">Submit</button>
+        <FormBody sections={sections} alreadySubmitted={alreadySubmitted} />
+        <button type="submit" disabled={alreadySubmitted}>
+          Submit
+        </button>
       </form>
     </>
   );
 };
 
-const FormBody = ({ sections }: Pick<Props, "sections">) => {
-  const { pending } = useFormStatus();
-
-  console.log({ pending });
-
+const FormBody = ({
+  sections,
+  alreadySubmitted,
+}: Pick<Props, "sections" | "alreadySubmitted">) => {
   return (
     <>
       {sections.map((section, index) => (
@@ -45,6 +47,7 @@ const FormBody = ({ sections }: Pick<Props, "sections">) => {
                 value={choice.id}
                 name={choice.label}
                 defaultChecked={choice.selected}
+                disabled={alreadySubmitted}
               />
               <label htmlFor={choice.label} className="px-2">
                 {choice.label}

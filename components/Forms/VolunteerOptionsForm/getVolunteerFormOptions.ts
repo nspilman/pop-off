@@ -47,6 +47,7 @@ export const getVolunteerFormOptions = async (userId: string) => {
         volunteer_option_id,
         optionDescription,
         category,
+        alreadySelected,
         default_selected: alreadySelected?.length
           ? selected
           : JSON.parse(default_selected),
@@ -54,8 +55,16 @@ export const getVolunteerFormOptions = async (userId: string) => {
     }
   );
 
+  const userAlreadySubmitted = formSections.some(
+    (section) => section.alreadySelected
+  );
+
   interface CategoryChoices {
-    [key: string]: { label: string; id: string; selected: boolean }[];
+    [key: string]: {
+      label: string;
+      id: string;
+      selected: boolean;
+    }[];
   }
 
   const groupedByCategory = formSections.reduce(
@@ -82,5 +91,5 @@ export const getVolunteerFormOptions = async (userId: string) => {
     })
   );
 
-  return { sections, songInfo };
+  return { sections, songInfo, userAlreadySubmitted };
 };
