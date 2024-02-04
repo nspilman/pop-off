@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { SONG_ID } from "../constants";
 import { redirect } from "next/navigation";
 import { EMAIL_FORM_ERRORS } from "@/constants";
@@ -17,7 +17,6 @@ export async function sendSignInLinkToEmail(formData: FormData) {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
-  const origin = headers().get("origin");
 
   const email = formData.get("email")?.toString();
   if (!email) {
@@ -31,14 +30,16 @@ export async function sendSignInLinkToEmail(formData: FormData) {
   const redirectUrl = encodeURIComponent("/falling");
   const referral = formData.get("referral")?.toString();
 
+  const emailRedirectTo = `${
+    process.env.NEXT_PUBLIC_BASE_URL
+  }/auth/callback?redirect=${redirectUrl}${
+    referral ? "&referral=" + referral : ""
+  }`;
+
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${
-        process.env.NEXT_PUBLIC_BASE_URL
-      }/auth/callback?redirect=${redirectUrl}${
-        referral ? "&referral=" + referral : ""
-      }`,
+      emailRedirectTo,
     },
   });
   if (error) {
@@ -48,20 +49,17 @@ export async function sendSignInLinkToEmail(formData: FormData) {
 }
 
 export async function handleVolunteerFormSubmission(
-  songId: string,
+  vars: { songId: string; userId: string },
   formData: FormData
 ) {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
-  const {
-    data: { session },
-  } = await supabaseClient.auth.getSession();
   const keys = Array.from(formData.keys()).filter(
     (key) => !key.startsWith("$ACTION")
   );
 
-  const userId = session?.user.id || "";
+  const { songId, userId } = vars;
 
   const selected = keys.map((key) => ({
     volunteer_type_id: formData.get(key),
@@ -98,25 +96,26 @@ export async function submitListenerFeedback(formData: FormData) {
 
   const userId = session?.user.id || "";
 
-  const selected = {
-    additional_feedback: formData.get("additional_feedback"),
-    similar_artists_or_songs: formData.get("similar_artists_or_songs"),
-    song_id: SONG_ID,
+  const payload = keys.map((fieldId) => ({
+    field_id: fieldId,
+    response_value: formData.get(fieldId),
     user_id: userId,
-  };
+    song_id: SONG_ID,
+  }));
 
   const { error: deleteError } = await supabaseClient
-    .from("listener_feedback")
+    .from("market_research_responses")
     .delete()
     .filter("user_id", "eq", userId)
     .filter("song_id", "eq", SONG_ID);
 
   const { error } = await supabaseClient
-    .from("listener_feedback")
-    .insert(selected);
+    .from("market_research_responses")
+    .insert(payload);
 
   console.log({
     error,
     deleteError,
+    keys,
   });
 }

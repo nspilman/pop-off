@@ -1,9 +1,6 @@
-import MultiSelectForm from "@/components/MultiselectForm";
-import { handleVolunteerFormSubmission } from "../actions";
 import { cookies } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
-import { SONG_ID } from "../constants";
-import { redirect } from "next/navigation";
+import { createClient } from "../../../utils/supabase/server";
+import { SONG_ID } from "@/app/constants";
 
 type OptionsReturn = {
   volunteer_option_id: string;
@@ -12,39 +9,28 @@ type OptionsReturn = {
   default_selected: string;
 };
 
-export default async function Form() {
+export const getVolunteerFormOptions = async (userId: string) => {
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
 
-  const {
-    data: { session },
-  } = await supabaseClient.auth.getSession();
-  if (!session) {
-    return redirect("/");
-  }
-
   const { data, error, status } = await supabaseClient.from("volunteer_options")
     .select(`
-      volunteer_option_id,
-      description,
-      category,
-      default_selected
-  `);
+    volunteer_option_id,
+    description,
+    category,
+    default_selected
+`);
 
   const { data: alreadySelected } = await supabaseClient
     .from("user_volunteer_activities")
     .select("volunteer_type_id")
-    .filter("user_id", "eq", session.user.id);
+    .filter("user_id", "eq", userId);
 
   const { data: songInfo } = await supabaseClient
     .from("songs")
     .select("song_id")
     .filter("song_id", "eq", SONG_ID);
 
-  const updatedActionWithSongId = handleVolunteerFormSubmission.bind(
-    null,
-    songInfo ? songInfo[0].song_id : ""
-  );
   const formSections = (data as unknown as OptionsReturn[]).map(
     ({
       volunteer_option_id,
@@ -61,6 +47,7 @@ export default async function Form() {
         volunteer_option_id,
         optionDescription,
         category,
+        alreadySelected,
         default_selected: alreadySelected?.length
           ? selected
           : JSON.parse(default_selected),
@@ -68,8 +55,16 @@ export default async function Form() {
     }
   );
 
+  const userAlreadySubmitted = formSections.some(
+    (section) => section.alreadySelected
+  );
+
   interface CategoryChoices {
-    [key: string]: { label: string; id: string; selected: boolean }[];
+    [key: string]: {
+      label: string;
+      id: string;
+      selected: boolean;
+    }[];
   }
 
   const groupedByCategory = formSections.reduce(
@@ -96,19 +91,5 @@ export default async function Form() {
     })
   );
 
-  // - Share this site with friends
-  // 	- Listen to the song the whole way through on Spotify at least once on Launch Day.
-  // 	- Listen to the song the whole way through at least once on launch Day
-  // 	- Put the song on a Spotify playlist
-  // 	- Put the song on an Apple Music playlist
-  // 	- Share the song on Instagram
-  // 	- Share the song on Twitter
-  // 	- Share the song on Threads
-  // 	- Use the song in a video on YouTube Shorts
-  // 	- Use the song in a video on TikTok
-  // 	- Use the song in a video on Instagram Reels
-
-  return (
-    <MultiSelectForm sections={sections} action={updatedActionWithSongId} />
-  );
-}
+  return { sections, songInfo, userAlreadySubmitted };
+};
