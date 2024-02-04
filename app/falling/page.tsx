@@ -5,13 +5,11 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { SVGProps } from "react";
 import RootLayout from "../layout";
-import { AdditionalFeedbackForm } from "@/components/AdditionalFeedbackForm";
+import { AdditionalFeedbackForm } from "@/components/Forms/AdditionalFeedbackForm/AdditionalFeedbackForm";
 import { generateShareToken } from "@/utils/generateShareLink";
 import { CopyShareLink } from "@/components/CopyShareLink";
 import { UnsubscribeForm } from "@/components/Forms/UnsubscribeForm/UnsubscribeForm";
-import { getVolunteerFormOptions } from "@/utils/getVolunteerFormOptions";
-import { handleVolunteerFormSubmission } from "../actions";
-import MultiSelectForm from "@/components/MultiselectForm";
+import { VolunteerOptionsForm } from "@/components/Forms/VolunteerOptionsForm";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -26,12 +24,6 @@ export default async function Index() {
   if (!session) {
     return redirect("/");
   }
-
-  const { sections, songInfo } = await getVolunteerFormOptions(session.user.id);
-  const updatedActionWithSongId = handleVolunteerFormSubmission.bind(
-    null,
-    songInfo ? songInfo[0].song_id : ""
-  );
 
   const shareLink = await generateShareToken();
 
@@ -86,10 +78,7 @@ export default async function Index() {
               </Link>
             </div>
           </section>
-          <MultiSelectForm
-            sections={sections}
-            action={updatedActionWithSongId}
-          />
+          <VolunteerOptionsForm />
           <section className="w-full max-w-md mx-auto mt-12 text-center">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
               Join the Launch
@@ -100,7 +89,7 @@ export default async function Index() {
               together!
             </p>
           </section>
-          <AdditionalFeedbackForm />
+          <AdditionalFeedbackForm userId={session.user.id} />
           <UnsubscribeForm />
         </main>
         <footer className="px-4 lg:px-6 h-14 flex items-center">

@@ -99,25 +99,26 @@ export async function submitListenerFeedback(formData: FormData) {
 
   const userId = session?.user.id || "";
 
-  const selected = {
-    additional_feedback: formData.get("additional_feedback"),
-    similar_artists_or_songs: formData.get("similar_artists_or_songs"),
-    song_id: SONG_ID,
+  const payload = keys.map((fieldId) => ({
+    field_id: fieldId,
+    response_value: formData.get(fieldId),
     user_id: userId,
-  };
+    song_id: SONG_ID,
+  }));
 
   const { error: deleteError } = await supabaseClient
-    .from("listener_feedback")
+    .from("market_research_responses")
     .delete()
     .filter("user_id", "eq", userId)
     .filter("song_id", "eq", SONG_ID);
 
   const { error } = await supabaseClient
-    .from("listener_feedback")
-    .insert(selected);
+    .from("market_research_responses")
+    .insert(payload);
 
   console.log({
     error,
     deleteError,
+    keys,
   });
 }

@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { createClient } from "./supabase/server";
+import { createClient } from "../../../utils/supabase/server";
 import { SONG_ID } from "@/app/constants";
 
 type OptionsReturn = {
