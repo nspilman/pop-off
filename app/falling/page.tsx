@@ -5,11 +5,13 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { SVGProps } from "react";
 import RootLayout from "../layout";
-import { AdditionalFeedbackForm } from "@/components/Forms/AdditionalFeedbackForm/AdditionalFeedbackForm";
 import { generateShareToken } from "@/utils/generateShareLink";
 import { CopyShareLink } from "@/components/CopyShareLink";
-import { UnsubscribeForm } from "@/components/Forms/UnsubscribeForm/UnsubscribeForm";
-import { VolunteerOptionsForm } from "@/components/Forms/VolunteerOptionsForm";
+import {
+  VolunteerOptionsForm,
+  UnsubscribeForm,
+  AdditionalFeedbackForm,
+} from "@/components/Forms";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -78,7 +80,7 @@ export default async function Index() {
               </Link>
             </div>
           </section>
-          <VolunteerOptionsForm />
+          <VolunteerOptionsForm userId={session.user.id} />
           <section className="w-full max-w-md mx-auto mt-12 text-center">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
               Join the Launch
