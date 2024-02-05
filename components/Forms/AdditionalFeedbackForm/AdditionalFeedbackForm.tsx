@@ -1,7 +1,7 @@
 import { submitListenerFeedback } from "@/app/actions";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+
 import { getAdditionalFeedbackFormOptions } from "./getAdditionalFeedbackFormOptions";
+import { FormBody } from "./FormBody";
 
 interface Props {
   userId: string;
@@ -19,23 +19,11 @@ export const AdditionalFeedbackForm = async ({ userId }: Props) => {
           Fill out the form below and we'll get back to you as soon as possible.
         </p>
       </div>
-      <form className="space-y-4" action={submitListenerFeedback}>
-        {formSections?.map((field) => (
-          <div className="space-y-2 flex flex-col">
-            <label htmlFor={field.id}>{field.label}</label>
-            <textarea
-              id={field.id}
-              name={field.id}
-              placeholder={field.placeholder}
-              className="text-black p-2 rounded"
-              defaultValue={field.defaultValue}
-              disabled={userAlreadySubmitted}
-            />
-          </div>
-        ))}
-
-        <button disabled={userAlreadySubmitted}>Send Suggestion</button>
-      </form>
+      <FormBody
+        submitListenerFeedback={submitListenerFeedback}
+        formSections={formSections}
+        isAlreadySelected={userAlreadySubmitted}
+      />
     </div>
   );
 };

@@ -10,7 +10,7 @@ export const VolunteerOptionsForm = async ({ userId }: Props) => {
   const { sections, songInfo, userAlreadySubmitted } =
     await getVolunteerFormOptions(userId);
   const updatedActionWithSongId = handleVolunteerFormSubmission.bind(null, {
-    songId: songInfo ? songInfo[0].song_id : "",
+    songId: songInfo ? songInfo[0].song_id.toString() : "",
     userId,
   });
 

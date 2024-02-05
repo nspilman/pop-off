@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { createClient } from "../../../utils/supabase/server";
 import { SONG_ID } from "@/app/constants";
+import { Tables } from "@/types";
 
 type MarketResearchField = {
   id: string;
@@ -30,8 +31,8 @@ export const getAdditionalFeedbackFormOptions = async (userId: string) => {
     .select("song_id")
     .filter("song_id", "eq", SONG_ID);
 
-  const formSections = (data as unknown as MarketResearchField[])
-    .toSorted((a, b) => a.order - b.order)
+  const formSections = data
+    ?.toSorted((a, b) => (a?.order || 0) - (b?.order || 0))
     .map(({ id, label, placeholder, order }) => {
       const existingValue =
         alreadySelected?.find((val) => val.field_id === id)?.response_value ||
@@ -46,7 +47,8 @@ export const getAdditionalFeedbackFormOptions = async (userId: string) => {
       };
     });
 
-  const userAlreadySubmitted = formSections.some((field) => field.defaultValue);
+  const userAlreadySubmitted =
+    formSections?.some((field) => field.defaultValue) || false;
 
   return { formSections, songInfo, userAlreadySubmitted };
 };

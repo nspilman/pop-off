@@ -9,3 +9,4 @@ enum Tables {
   Users = "users",
   VolunteerOptions = "volunteer_options",
 }
+

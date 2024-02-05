@@ -40,7 +40,7 @@ export const getVolunteerFormOptions = async (userId: string) => {
     }) => {
       const selected =
         alreadySelected?.some(
-          (val) => val.volunteer_type_id === volunteer_option_id
+          (val) => val?.volunteer_type_id?.toString() === volunteer_option_id
         ) || false;
 
       return {

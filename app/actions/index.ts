@@ -62,8 +62,8 @@ export async function handleVolunteerFormSubmission(
   const { songId, userId } = vars;
 
   const selected = keys.map((key) => ({
-    volunteer_type_id: formData.get(key),
-    song_id: songId,
+    volunteer_type_id: JSON.parse(formData.get(key)?.toString() || "-1"),
+    song_id: JSON.parse(songId),
     user_id: userId,
   }));
 
@@ -83,7 +83,10 @@ export async function handleVolunteerFormSubmission(
   });
 }
 
-export async function submitListenerFeedback(formData: FormData) {
+export async function submitListenerFeedback(
+  initialState: any,
+  formData: FormData
+) {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
@@ -97,8 +100,8 @@ export async function submitListenerFeedback(formData: FormData) {
   const userId = session?.user.id || "";
 
   const payload = keys.map((fieldId) => ({
-    field_id: fieldId,
-    response_value: formData.get(fieldId),
+    field_id: JSON.parse(fieldId),
+    response_value: formData.get(fieldId)?.toString() || "",
     user_id: userId,
     song_id: SONG_ID,
   }));
@@ -113,6 +116,7 @@ export async function submitListenerFeedback(formData: FormData) {
     .from("market_research_responses")
     .insert(payload);
 
+  return "Success";
   console.log({
     error,
     deleteError,
