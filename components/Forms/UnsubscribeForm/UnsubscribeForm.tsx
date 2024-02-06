@@ -13,7 +13,6 @@ const unsubscribe = async (onSuccess: any, formData: FormData) => {
     .from("users")
     .select("email")
     .filter("user_id", "eq", user?.id);
-  console.log({ data, user });
 
   const { error: insertError } = await supabase.from("unsubscriptions").insert({
     email: data?.[0].email,

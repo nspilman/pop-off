@@ -1,24 +1,41 @@
-import { getVolunteerFormOptions } from "./getVolunteerFormOptions";
-import { handleVolunteerFormSubmission } from "@/app/actions";
-import MultiSelectForm from "@/components/MultiselectForm";
+"use client";
+import { MultiSelectForm } from "@/components/MultiselectForm";
+import { ClientWrapper } from "../ClientWrapper/ClientWrapper";
+import { useState } from "react";
+import { FormReturn } from "@/types";
 
 interface Props {
-  userId: string;
+  userAlreadySubmitted: boolean;
+  hiddenFields: Record<string, string>;
+  handleVolunteerFormSubmission: (formData: FormData) => FormReturn;
+  sections: {
+    title: string;
+    choices: {
+      label: string;
+      id: string;
+      selected: boolean;
+    }[];
+  }[];
 }
 
-export const VolunteerOptionsForm = async ({ userId }: Props) => {
-  const { sections, songInfo, userAlreadySubmitted } =
-    await getVolunteerFormOptions(userId);
-  const updatedActionWithSongId = handleVolunteerFormSubmission.bind(null, {
-    songId: songInfo ? songInfo[0].song_id.toString() : "",
-    userId,
-  });
-
+export const VolunteerOptionsForm = ({
+  handleVolunteerFormSubmission,
+  userAlreadySubmitted,
+  sections,
+  hiddenFields,
+}: Props) => {
+  const [isDisabled, setIsDisbled] = useState(userAlreadySubmitted);
   return (
-    <MultiSelectForm
-      sections={sections}
-      action={updatedActionWithSongId}
-      alreadySubmitted={userAlreadySubmitted}
-    />
+    <ClientWrapper
+      action={handleVolunteerFormSubmission}
+      disabled={isDisabled}
+      setDisabled={setIsDisbled}
+    >
+      <MultiSelectForm
+        sections={sections}
+        disabled={isDisabled}
+        hiddenFields={hiddenFields}
+      />
+    </ClientWrapper>
   );
 };

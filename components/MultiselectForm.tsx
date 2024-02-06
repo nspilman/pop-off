@@ -1,7 +1,5 @@
 "use client";
-// MultiSelectForm.tsx
 import React from "react";
-import { useFormStatus } from "react-dom";
 
 // Assuming choices is imported or defined here
 
@@ -12,29 +10,34 @@ interface Section {
 
 interface Props {
   sections: Section[];
-  action: (formData: FormData) => void;
-  alreadySubmitted: boolean;
+  disabled: boolean;
+  hiddenFields: Record<string, string>;
 }
 
-const MultiSelectForm = ({ sections, action, alreadySubmitted }: Props) => {
+export const MultiSelectForm = ({
+  sections,
+  disabled,
+  hiddenFields,
+}: Props) => {
   return (
-    <>
-      <form action={action} className="text-lg">
-        <FormBody sections={sections} alreadySubmitted={alreadySubmitted} />
-        <button type="submit" disabled={alreadySubmitted}>
-          Submit
-        </button>
-      </form>
-    </>
+    <FormBody
+      sections={sections}
+      disabled={disabled}
+      hiddenFields={hiddenFields}
+    />
   );
 };
 
 const FormBody = ({
   sections,
-  alreadySubmitted,
-}: Pick<Props, "sections" | "alreadySubmitted">) => {
+  disabled,
+  hiddenFields,
+}: Pick<Props, "sections" | "disabled" | "hiddenFields">) => {
   return (
     <>
+      {Object.keys(hiddenFields).map((field) => (
+        <input name={field} value={hiddenFields[field]} hidden key={field} />
+      ))}
       {sections.map((section, index) => (
         <div>
           <h3 className="py-1 font-bold">{section.title}</h3>
@@ -47,7 +50,7 @@ const FormBody = ({
                 value={choice.id}
                 name={choice.label}
                 defaultChecked={choice.selected}
-                disabled={alreadySubmitted}
+                disabled={disabled}
               />
               <label htmlFor={choice.label} className="px-2">
                 {choice.label}
@@ -59,5 +62,3 @@ const FormBody = ({
     </>
   );
 };
-
-export default MultiSelectForm;

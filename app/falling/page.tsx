@@ -12,6 +12,8 @@ import {
   UnsubscribeForm,
   AdditionalFeedbackForm,
 } from "@/components/Forms";
+import { getVolunteerFormOptions } from "@/components/Forms/VolunteerOptionsForm/getVolunteerFormOptions";
+import { handleVolunteerFormSubmission } from "../actions";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -29,6 +31,12 @@ export default async function Index() {
 
   const shareLink = await generateShareToken();
 
+  const userId = session.user.id;
+  const { sections, songInfo, userAlreadySubmitted } =
+    await getVolunteerFormOptions(session.user.id);
+
+  const songId = songInfo?.[0].song_id.toString() || "";
+
   return (
     <RootLayout>
       <div className="flex flex-col min-h-screen bg-black text-white">
@@ -38,7 +46,7 @@ export default async function Index() {
             <span className="sr-only">Secret Song</span>
           </Link>
         </header>
-        <main className="flex-1 flex flex-col items-center justify-center py-12 md:py-24 lg:py-32">
+        <div className="flex-1 flex flex-col items-center justify-center py-12 md:py-24 lg:py-32">
           <section className="w-full max-w-md mx-auto text-center">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Exclusive Pre-Release
@@ -80,7 +88,12 @@ export default async function Index() {
               </Link>
             </div>
           </section>
-          <VolunteerOptionsForm userId={session.user.id} />
+          <VolunteerOptionsForm
+            sections={sections}
+            userAlreadySubmitted={userAlreadySubmitted}
+            handleVolunteerFormSubmission={handleVolunteerFormSubmission}
+            hiddenFields={{ userId, songId }}
+          />
           <section className="w-full max-w-md mx-auto mt-12 text-center">
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
               Join the Launch
@@ -93,7 +106,7 @@ export default async function Index() {
           </section>
           <AdditionalFeedbackForm userId={session.user.id} />
           <UnsubscribeForm />
-        </main>
+        </div>
         <footer className="px-4 lg:px-6 h-14 flex items-center">
           <p className="text-xs text-gray-500">
             © 2024 Secret Song. All rights reserved.

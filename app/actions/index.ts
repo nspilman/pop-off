@@ -3,28 +3,31 @@ import { cookies } from "next/headers";
 import { SONG_ID } from "../constants";
 import { redirect } from "next/navigation";
 import { EMAIL_FORM_ERRORS } from "@/constants";
+import { FormReturn } from "@/types";
 
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailRegex.test(email);
 }
 
-const showError = (errorMessage: string) => {
-  redirect(`./?error=${errorMessage}`);
-};
-
-export async function sendSignInLinkToEmail(formData: FormData) {
+export async function sendSignInLinkToEmail(formData: FormData): FormReturn {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
 
   const email = formData.get("email")?.toString();
   if (!email) {
-    return showError(EMAIL_FORM_ERRORS.MISSING_EMAIL);
+    return {
+      status: "Error",
+      message: EMAIL_FORM_ERRORS.MISSING_EMAIL,
+    };
   }
 
   if (!isValidEmail(email)) {
-    return showError(EMAIL_FORM_ERRORS.MALFORMATTED_EMAIL);
+    return {
+      status: "Error",
+      message: EMAIL_FORM_ERRORS.MALFORMATTED_EMAIL,
+    };
   }
 
   const redirectUrl = encodeURIComponent("/falling");
@@ -43,15 +46,17 @@ export async function sendSignInLinkToEmail(formData: FormData) {
     },
   });
   if (error) {
-    showError(error.message);
+    return { status: "Error", message: "ERROR!!!" };
   }
-  console.log({ error });
+  return {
+    status: "Success",
+    message: "Check your email for your login link!",
+  };
 }
 
 export async function handleVolunteerFormSubmission(
-  vars: { songId: string; userId: string },
   formData: FormData
-) {
+): FormReturn {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
@@ -59,13 +64,25 @@ export async function handleVolunteerFormSubmission(
     (key) => !key.startsWith("$ACTION")
   );
 
-  const { songId, userId } = vars;
+  const userId = formData.get("userId")?.toString();
+  const songId = formData.get("songId")?.toString();
 
-  const selected = keys.map((key) => ({
-    volunteer_type_id: JSON.parse(formData.get(key)?.toString() || "-1"),
-    song_id: JSON.parse(songId),
-    user_id: userId,
-  }));
+  if (!userId || !songId) {
+    throw new Error("userId or songId missing");
+  }
+
+  const selected = keys
+    .filter((key) => !["userId", "songId"].includes(key))
+    .map((key) => {
+      const volunteer_type_id = JSON.parse(
+        formData.get(key)?.toString() || "-1"
+      );
+      return {
+        volunteer_type_id: volunteer_type_id,
+        song_id: JSON.parse(songId),
+        user_id: userId,
+      };
+    });
 
   const { error: deleteError } = await supabaseClient
     .from("user_volunteer_activities")
@@ -81,12 +98,12 @@ export async function handleVolunteerFormSubmission(
     error,
     deleteError,
   });
+  if (!error) {
+    return { status: "Success", message: "you did it!" };
+  }
 }
 
-export async function submitListenerFeedback(
-  initialState: any,
-  formData: FormData
-) {
+export async function submitListenerFeedback(formData: FormData): FormReturn {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
@@ -115,11 +132,15 @@ export async function submitListenerFeedback(
   const { error } = await supabaseClient
     .from("market_research_responses")
     .insert(payload);
-
-  return "Success";
   console.log({
     error,
     deleteError,
     keys,
   });
+
+  if (error || deleteError) {
+    return { status: "Error", message: "failed" };
+  }
+
+  return { status: "Success", message: "You did it!" };
 }
