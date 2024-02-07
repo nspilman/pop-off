@@ -1,7 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { SONG_ID } from "../constants";
-import { redirect } from "next/navigation";
 import { EMAIL_FORM_ERRORS } from "@/constants";
 import { FormReturn } from "@/types";
 
@@ -101,6 +100,11 @@ export async function handleVolunteerFormSubmission(
   if (!error) {
     return { status: "Success", message: "you did it!" };
   }
+  return {
+    status: "Error",
+    message:
+      "Well, darn. That didn't work... we still would love your help and appreciate whatever you said you'd do!!",
+  };
 }
 
 export async function submitListenerFeedback(formData: FormData): FormReturn {
