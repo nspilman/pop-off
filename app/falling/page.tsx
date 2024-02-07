@@ -14,6 +14,7 @@ import {
 } from "@/components/Forms";
 import { getVolunteerFormOptions } from "@/components/Forms/VolunteerOptionsForm/getVolunteerFormOptions";
 import { handleVolunteerFormSubmission } from "../actions";
+import { TOAST_REDIRECT_KEY } from "@/constants";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -26,7 +27,9 @@ export default async function Index() {
     data: { session },
   } = await supabaseClient.auth.getSession();
   if (!session) {
-    return redirect("/");
+    return redirect(
+      `/?${TOAST_REDIRECT_KEY}=${"Thanks for being here! Submit your email below, and we'll send you a login link to access the song."}`
+    );
   }
 
   const shareLink = await generateShareToken();

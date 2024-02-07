@@ -1,6 +1,6 @@
 "use client";
 import { MultiSelectForm } from "@/components/MultiselectForm";
-import { ClientWrapper } from "../ClientWrapper/ClientWrapper";
+import { ClientFormWrapper } from "../ClientFormWrapper";
 import { useState } from "react";
 import { FormReturn } from "@/types";
 
@@ -26,7 +26,7 @@ export const VolunteerOptionsForm = ({
 }: Props) => {
   const [isDisabled, setIsDisbled] = useState(userAlreadySubmitted);
   return (
-    <ClientWrapper
+    <ClientFormWrapper
       action={handleVolunteerFormSubmission}
       disabled={isDisabled}
       setDisabled={setIsDisbled}
@@ -36,6 +36,6 @@ export const VolunteerOptionsForm = ({
         disabled={isDisabled}
         hiddenFields={hiddenFields}
       />
-    </ClientWrapper>
+    </ClientFormWrapper>
   );
 };

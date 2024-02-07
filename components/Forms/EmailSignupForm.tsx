@@ -1,15 +1,9 @@
 import { sendSignInLinkToEmail } from "@/app/actions";
-import { ClientWrapper } from "./ClientWrapper/ClientWrapper";
+import { ClientFormWrapper } from "./ClientFormWrapper";
 
-export const EmailSignupForm = ({
-  error,
-  referral,
-}: {
-  error?: string;
-  referral?: string;
-}) => {
+export const EmailSignupForm = ({ referral }: { referral?: string }) => {
   return (
-    <ClientWrapper action={sendSignInLinkToEmail}>
+    <ClientFormWrapper action={sendSignInLinkToEmail}>
       <div>
         <input
           className="max-w-lg flex-1 text-black"
@@ -20,6 +14,6 @@ export const EmailSignupForm = ({
         />
         {referral && <input hidden name="referral" value={referral} />}
       </div>
-    </ClientWrapper>
+    </ClientFormWrapper>
   );
 };

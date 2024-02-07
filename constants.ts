@@ -7,3 +7,5 @@ export const FORM_STATUS = {
   SUCCESS: "success",
   ERROR: "error",
 };
+
+export const TOAST_REDIRECT_KEY = "toast-redirect-error";

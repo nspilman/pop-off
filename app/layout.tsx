@@ -1,6 +1,7 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { ToastQuerystringMonitor } from "@/components/ToastQuerystringMonitor";
 
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className="bg-background text-foreground lg:p-20">
         <main>{children}</main>
         <Toaster />
+        <ToastQuerystringMonitor />
       </body>
     </html>
   );

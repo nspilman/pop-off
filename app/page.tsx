@@ -13,7 +13,6 @@ export default async function Index({
    * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
    */
 
-  const error = searchParams?.error as string;
   const referral = searchParams?.referral as string;
 
   return (
@@ -39,7 +38,7 @@ export default async function Index({
                 </p>
               </div>
               <div className="w-full max-w-sm space-y-2">
-                <EmailSignupForm error={error} referral={referral} />
+                <EmailSignupForm referral={referral} />
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Sign up to get notified when the song is released.
                 </p>

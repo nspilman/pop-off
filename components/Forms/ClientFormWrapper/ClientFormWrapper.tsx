@@ -10,12 +10,14 @@ interface Props {
   action: (formData: FormData) => FormReturn;
   disabled?: boolean;
   setDisabled?: (isDisabled: boolean) => void;
+  submitButtonLabel?: string;
 }
-export const ClientWrapper = ({
+export const ClientFormWrapper = ({
   children,
   action,
   disabled,
   setDisabled,
+  submitButtonLabel,
 }: Props) => {
   const { toast } = useToast();
 
@@ -48,7 +50,7 @@ export const ClientWrapper = ({
       )}
       {children}
       <SubmitButton
-        label={"Send Suggestion"}
+        label={submitButtonLabel || "Submit"}
         disabled={disabled}
         pending={pending}
       />

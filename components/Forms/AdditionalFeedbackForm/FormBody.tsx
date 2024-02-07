@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ClientWrapper } from "../ClientWrapper/ClientWrapper";
+import { ClientFormWrapper } from "../ClientFormWrapper";
 import { FormReturn } from "@/types";
 
 interface Props {
@@ -24,7 +24,7 @@ export const FormBody = ({
   const [disabled, setDisabled] = useState(isAlreadySelected);
 
   return (
-    <ClientWrapper
+    <ClientFormWrapper
       action={submitListenerFeedback}
       disabled={disabled}
       setDisabled={setDisabled}
@@ -44,6 +44,6 @@ export const FormBody = ({
           </div>
         ))}
       </>
-    </ClientWrapper>
+    </ClientFormWrapper>
   );
 };
