@@ -30,8 +30,8 @@ export const FormBody = ({
       setDisabled={setDisabled}
     >
       <>
-        {formSections?.map((field) => (
-          <div className="space-y-2 flex flex-col" key={JSON.stringify(field)}>
+        {formSections?.map((field, i) => (
+          <div className="space-y-2 flex flex-col" key={i}>
             <label htmlFor={field.id.toString()}>{field.label}</label>
             <textarea
               id={field.id.toString()}

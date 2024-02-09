@@ -1,7 +1,5 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
-
 export const SubmitButton = ({
   label,
   disabled = false,
@@ -11,12 +9,12 @@ export const SubmitButton = ({
   disabled?: boolean;
   pending?: boolean;
 }) => {
-  console.log({ pending });
   return (
     <button
       type="submit"
-      className={`border ${pending ? "text-gray-400" : "white"}`}
+      className={`border ${pending ? "text-gray-400" : "white"} p-2`}
       disabled={disabled}
+      style={{ marginTop: "unset" }}
     >
       {!pending ? label : "loading"}
     </button>

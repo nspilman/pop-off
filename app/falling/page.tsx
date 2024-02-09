@@ -1,10 +1,6 @@
 import HLSAudioPlayer from "@/components/HLSAudioPlayer";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import { SVGProps } from "react";
-import RootLayout from "../layout";
 import { generateShareToken } from "@/utils/generateShareLink";
 import { CopyShareLink } from "@/components/CopyShareLink";
 import {
@@ -15,20 +11,17 @@ import {
 import { getVolunteerFormOptions } from "@/components/Forms/VolunteerOptionsForm/getVolunteerFormOptions";
 import { handleVolunteerFormSubmission } from "../actions";
 import { TOAST_REDIRECT_KEY } from "@/constants";
+import { Layout } from "@/components/Layout/layout";
+import { getSession } from "@/utils/supabase/getSession";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
 
 export default async function Index() {
-  const cookieStore = cookies();
-  const supabaseClient = await createClient(cookieStore);
-
-  const {
-    data: { session },
-  } = await supabaseClient.auth.getSession();
+  const session = await getSession();
   if (!session) {
     return redirect(
-      `/?${TOAST_REDIRECT_KEY}=${"Thanks for being here! Submit your email below, and we'll send you a login link to access the song."}`
+      `/?${TOAST_REDIRECT_KEY}=${"Oops - you can only access the song via access link sent to your email. Type your email in the form to get started."}`
     );
   }
 
@@ -41,82 +34,55 @@ export default async function Index() {
   const songId = songInfo?.[0].song_id.toString() || "";
 
   return (
-    <RootLayout>
-      <div className="flex flex-col min-h-screen bg-black text-white">
-        <header className="px-4 lg:px-6 h-14 flex items-center">
-          <Link className="flex items-center justify-center" href="#">
-            <MusicIcon className="h-6 w-6 text-white" />
-            <span className="sr-only">Secret Song</span>
-          </Link>
-        </header>
-        <div className="flex-1 flex flex-col items-center justify-center py-12 md:py-24 lg:py-32">
-          <section className="w-full max-w-md mx-auto text-center">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Exclusive Pre-Release
-            </h1>
-            <p className="mt-4 text-gray-300">
-              Listen to our new song before it's officially released.
-            </p>
-            <HLSAudioPlayer src={SONG_STREAMING_URL} />
-
-            <div className="mt-8">
-              <div className="w-full" />
-            </div>
-            <CopyShareLink link={shareLink} />
-            <div className="mt-8">
-              <Link
-                className="inline-flex h-10 items-center justify-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
-                href="#"
-              >
-                Give Feedback
-              </Link>
-            </div>
-          </section>
-          <section className="w-full max-w-md mx-auto mt-12 text-center">
-            <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
-              Share the Secret
-            </h2>
-            <p className="mt-4 text-gray-300">
-              Spread the word on social media.
-            </p>
-            <div className="mt-8 flex justify-center space-x-4">
-              <Link className="text-blue-500" href="#">
-                <TwitterIcon className="h-6 w-6" />
-              </Link>
-              <Link className="text-blue-600" href="#">
-                <FacebookIcon className="h-6 w-6" />
-              </Link>
-              <Link className="text-blue-700" href="#">
-                <LinkedinIcon className="h-6 w-6" />
-              </Link>
-            </div>
-          </section>
-          <VolunteerOptionsForm
-            sections={sections}
-            userAlreadySubmitted={userAlreadySubmitted}
-            handleVolunteerFormSubmission={handleVolunteerFormSubmission}
-            hiddenFields={{ userId, songId }}
-          />
-          <section className="w-full max-w-md mx-auto mt-12 text-center">
-            <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
-              Join the Launch
-            </h2>
-            <p className="mt-4 text-gray-300">
-              By sharing our music, you're not just spreading the word, you're
-              becoming a part of our journey. Let's make this launch a success
-              together!
-            </p>
-          </section>
-          <AdditionalFeedbackForm userId={session.user.id} />
-          <UnsubscribeForm />
-        </div>
-        <footer className="px-4 lg:px-6 h-14 flex items-center">
-          <p className="text-xs text-gray-500">
-            © 2024 Secret Song. All rights reserved.
+    <Layout bgClass="bg-falling-stars">
+      <div className="flex-1 flex flex-col items-center justify-center py-6 md:py-12 lg:py-16">
+        <section className="w-full max-w-md mx-auto text-center flex flex-col items-center">
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Falling by Toneway
+          </h1>
+          <p className="mt-4 text-gray-500">
+            Listen to our new song before it's officially released.
           </p>
-        </footer>
+          <HLSAudioPlayer src={SONG_STREAMING_URL} />
+          <div className="mt-8">
+            <div className="w-full" />
+          </div>
+        </section>
+
+        <div className="mt-4 text-gray-500 md:text-md dark:text-gray-500 pb-8">
+          <p className="pb-2 font-bold">What do you think? Love it?</p>
+          <p className="pb-2">
+            If so, we humbly ask for your help. With essentially infinite new
+            songs released daily on streaming services, we're looking for an
+            army of listeners (a Tonewave?) when the song drops to cut through
+            the noise. The goal is to get the attention of the robot tastemakers
+            to start recommending the song to new listeners with similar
+            listening profiles.
+          </p>
+          <p className="pb-2 font-bold">You can help in the following ways:</p>
+          <div className="flex space-x-8">
+            <CopyShareLink link={shareLink} />
+            <button className="border p-2">
+              Pledge to help when the song is released
+            </button>
+            <button className="border p-2">Provide market insights</button>
+          </div>
+        </div>
+        <p className="text-gray-500">
+          Or if you didn't like the song and don't want to hear from us -
+        </p>
+        {/* 
+        <VolunteerOptionsForm
+          sections={sections}
+          userAlreadySubmitted={userAlreadySubmitted}
+          handleVolunteerFormSubmission={handleVolunteerFormSubmission}
+          hiddenFields={{ userId, songId }}
+        />
+
+        <AdditionalFeedbackForm userId={session.user.id} /> */}
+        <UnsubscribeForm />
       </div>
-    </RootLayout>
+    </Layout>
   );
 }
 

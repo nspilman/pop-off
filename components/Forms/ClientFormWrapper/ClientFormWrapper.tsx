@@ -11,6 +11,7 @@ interface Props {
   disabled?: boolean;
   setDisabled?: (isDisabled: boolean) => void;
   submitButtonLabel?: string;
+  buttonPosition?: "below" | "right";
 }
 export const ClientFormWrapper = ({
   children,
@@ -18,6 +19,7 @@ export const ClientFormWrapper = ({
   disabled,
   setDisabled,
   submitButtonLabel,
+  buttonPosition = "below",
 }: Props) => {
   const { toast } = useToast();
 
@@ -40,9 +42,11 @@ export const ClientFormWrapper = ({
     }
   };
 
+  const className = buttonPosition === "below" ? "flex-col" : "items-center";
+
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      Thank you so much for your submission.
+    <form className={`space-y-4 flex ${className}`} onSubmit={handleSubmit}>
+      {/* Thank you so much for your submission. */}
       {disabled && setDisabled && (
         <button type="button" onClick={() => setDisabled && setDisabled(false)}>
           Edit?{" "}

@@ -21,6 +21,7 @@ export const MultiSelectForm = ({
 }: Props) => {
   return (
     <FormBody
+      key={JSON.stringify(sections)}
       sections={sections}
       disabled={disabled}
       hiddenFields={hiddenFields}
@@ -39,12 +40,12 @@ const FormBody = ({
         <input name={field} value={hiddenFields[field]} hidden key={field} />
       ))}
       {sections.map((section, index) => (
-        <div>
+        <div key={index}>
           <h3 className="py-1 font-bold">{section.title}</h3>
-          {section.choices.map((choice) => (
+          {section.choices.map((choice, j) => (
             <div>
               <input
-                key={index}
+                key={j}
                 type="checkbox"
                 id={choice.label}
                 value={choice.id}

@@ -103,7 +103,7 @@ export async function handleVolunteerFormSubmission(
   return {
     status: "Error",
     message:
-      "Well, darn. That didn't work... we still would love your help and appreciate whatever you said you'd do!!",
+      "Well, darn. That didn't work... we still would love your help and appreciate whatever you said you'd do!! Feel free to email your response to tonewaymusic@gmail.com, and we apologize for the inconvience.",
   };
 }
 
@@ -136,15 +136,17 @@ export async function submitListenerFeedback(formData: FormData): FormReturn {
   const { error } = await supabaseClient
     .from("market_research_responses")
     .insert(payload);
-  console.log({
-    error,
-    deleteError,
-    keys,
-  });
 
   if (error || deleteError) {
-    return { status: "Error", message: "failed" };
+    return {
+      status: "Error",
+      message:
+        "Hmm - something didn't work. Feel free to email your answers to tonewaymusic@gmail.com, and we apologize for the inconvenience!",
+    };
   }
 
-  return { status: "Success", message: "You did it!" };
+  return {
+    status: "Success",
+    message: "Thank you for submitting your thoughts and information!!",
+  };
 }

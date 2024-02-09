@@ -1,14 +1,13 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
-import { ToastQuerystringMonitor } from "@/components/ToastQuerystringMonitor";
-
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Toneway | Seattle-based Pop Group",
+  favicon: "./favicon.ico",
+  description:
+    "Listen to Falling by Toneway before the song hits the major streaming platforms",
 };
 
 export default function RootLayout({
@@ -17,12 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground lg:p-20">
-        <main>{children}</main>
-        <Toaster />
-        <ToastQuerystringMonitor />
-      </body>
+    <html lang="en" className={ GeistSans.className}>
+      <body className="bg-background text-foreground lg:p-20">{children}</body>
     </html>
   );
 }

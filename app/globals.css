@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes scrollBackground {
+  from { background-position: 0 0; }
+  to { background-position: 0 100%; }
+}
+.bg-loop {
+  animation: scrollBackground 20s linear infinite;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@keyframes rotateImage {
+  0%, 100% { transform: rotate(30deg); }
+  /* 25%, 75% { transform: rotate(10deg); } */
+  50% { transform: rotate(10deg); }
+}
+
+.rotate-back-and-forth {
+  animation: rotateImage 2.5s ease-in-out infinite;
+}
+
+.bg-falling-stars {
+  background-image:url('https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/bgGradient%20(3).png?t=2024-02-07T16%3A35%3A45.364Z')
+}
+
+.bg-music {
+  background-image: url('https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/natespilman_A_pattern_of_musical_notes_4133fa3d-0bd3-41da-958b-cf81c81361d9%20(1).png?t=2024-02-09T06%3A55%3A52.906Z');
+}
