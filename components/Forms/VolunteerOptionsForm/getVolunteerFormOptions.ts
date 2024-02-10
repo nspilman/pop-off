@@ -85,7 +85,7 @@ export const getVolunteerFormOptions = async (userId: string) => {
   const sections = Object.entries(groupedByCategory).map(
     ([title, choices]) => ({
       title,
-      choices: choices.toSorted((a, b) =>
+      choices: choices?.toSorted((a, b) =>
         a.selected ? (b.selected ? 0 : -1) : 1
       ),
     })
