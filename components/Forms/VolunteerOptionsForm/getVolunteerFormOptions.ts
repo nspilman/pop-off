@@ -82,14 +82,13 @@ export const getVolunteerFormOptions = async (userId: string) => {
     {}
   );
 
-  const sections = Object.entries(groupedByCategory).map(
-    ([title, choices]) => ({
+  const sections = Object.entries(groupedByCategory).map(([title, choices]) => {
+    choices.sort((a, b) => (a.selected ? (b.selected ? 0 : -1) : 1));
+    return {
       title,
-      choices:
-        choices?.toSorted((a, b) => (a.selected ? (b.selected ? 0 : -1) : 1)) ||
-        [],
-    })
-  );
+      choices,
+    };
+  });
 
   return { sections, songInfo, userAlreadySubmitted };
 };

@@ -29,9 +29,8 @@ export const getAdditionalFeedbackFormOptions = async (userId: string) => {
     .select("song_id")
     .filter("song_id", "eq", SONG_ID);
 
-  const formSections = data
-    ?.toSorted((a, b) => (a?.order || 0) - (b?.order || 0))
-    .map(({ id, label, placeholder, order }) => {
+  const formSections =
+    data?.map(({ id, label, placeholder, order }) => {
       const existingValue =
         alreadySelected?.find((val) => val.field_id === id)?.response_value ||
         "";
@@ -43,7 +42,9 @@ export const getAdditionalFeedbackFormOptions = async (userId: string) => {
         order,
         defaultValue: existingValue,
       };
-    });
+    }) || [];
+
+  formSections.sort((a, b) => (a?.order || 0) - (b?.order || 0));
 
   const userAlreadySubmitted =
     formSections?.some((field) => field.defaultValue) || false;
