@@ -7,7 +7,7 @@ import { FormReturn } from "@/types";
 
 interface Props {
   children: React.ReactElement;
-  action: (formData: FormData) => FormReturn;
+  action: (formData: FormData) => Promise<FormReturn>;
   disabled?: boolean;
   setDisabled?: (isDisabled: boolean) => void;
   submitButtonLabel?: string;

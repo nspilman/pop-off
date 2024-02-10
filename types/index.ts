@@ -1,5 +1,5 @@
 export type Status = "Success" | "Error";
-export type FormReturn = Promise<{ status: Status; message: string }>;
+export type FormReturn = { status: Status; message: string };
 
 export type Json =
   | string

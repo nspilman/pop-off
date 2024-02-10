@@ -9,7 +9,9 @@ function isValidEmail(email: string): boolean {
   return emailRegex.test(email);
 }
 
-export async function sendSignInLinkToEmail(formData: FormData): FormReturn {
+export async function sendSignInLinkToEmail(
+  formData: FormData
+): Promise<FormReturn> {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
@@ -55,7 +57,7 @@ export async function sendSignInLinkToEmail(formData: FormData): FormReturn {
 
 export async function handleVolunteerFormSubmission(
   formData: FormData
-): FormReturn {
+): Promise<FormReturn> {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);
@@ -107,7 +109,9 @@ export async function handleVolunteerFormSubmission(
   };
 }
 
-export async function submitListenerFeedback(formData: FormData): FormReturn {
+export async function submitListenerFeedback(
+  formData: FormData
+): Promise<FormReturn> {
   "use server";
   const cookieStore = cookies();
   const supabaseClient = await createClient(cookieStore);

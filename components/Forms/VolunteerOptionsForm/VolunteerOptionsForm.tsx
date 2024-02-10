@@ -7,12 +7,12 @@ import { FormReturn } from "@/types";
 interface Props {
   userAlreadySubmitted: boolean;
   hiddenFields: Record<string, string>;
-  handleVolunteerFormSubmission: (formData: FormData) => FormReturn;
+  handleVolunteerFormSubmission: (formData: FormData) => Promise<FormReturn>;
   sections: {
     title: string;
     choices: {
       label: string;
-      id: string;
+      id: number;
       selected: boolean;
     }[];
   }[];

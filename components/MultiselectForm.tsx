@@ -5,7 +5,7 @@ import React from "react";
 
 interface Section {
   title: string;
-  choices: { label: string; id: string; selected: boolean }[];
+  choices: { label: string; id: number; selected: boolean }[];
 }
 
 interface Props {

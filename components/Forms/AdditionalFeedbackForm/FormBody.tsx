@@ -5,7 +5,7 @@ import { ClientFormWrapper } from "../ClientFormWrapper";
 import { FormReturn } from "@/types";
 
 interface Props {
-  submitListenerFeedback(formData: FormData): FormReturn;
+  submitListenerFeedback(formData: FormData): Promise<FormReturn>;
   formSections?: {
     id: number;
     label: string;
