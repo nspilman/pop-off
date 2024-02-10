@@ -24,8 +24,6 @@ export const getAdditionalFeedbackFormOptions = async (userId: string) => {
     .select("field_id, response_value")
     .filter("user_id", "eq", userId);
 
-  console.log({ alreadySelected, data });
-
   const { data: songInfo } = await supabaseClient
     .from("songs")
     .select("song_id")

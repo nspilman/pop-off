@@ -17,7 +17,7 @@ export const CopyShareLink = ({ link }: Props) => {
   };
   return (
     <button className="border p-2" onClick={() => copyToClipboard(link)}>
-      Share this pre-release with friends
+      Share this pre-release
     </button>
   );
 };

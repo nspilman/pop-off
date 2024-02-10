@@ -24,7 +24,6 @@ export async function GET(request: Request) {
           referring_user_id: referringUserId,
           referred_user: user.id,
         });
-        console.log({ referringUserId, error, data });
       }
     }
   }

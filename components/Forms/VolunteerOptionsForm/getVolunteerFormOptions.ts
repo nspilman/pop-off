@@ -3,7 +3,7 @@ import { createClient } from "../../../utils/supabase/server";
 import { SONG_ID } from "@/app/constants";
 
 type OptionsReturn = {
-  volunteer_option_id: string;
+  volunteer_option_id: number;
   description: string;
   category: string;
   default_selected: string;
@@ -40,7 +40,7 @@ export const getVolunteerFormOptions = async (userId: string) => {
     }) => {
       const selected =
         alreadySelected?.some(
-          (val) => val?.volunteer_type_id?.toString() === volunteer_option_id
+          (val) => val?.volunteer_type_id === volunteer_option_id
         ) || false;
 
       return {
@@ -56,13 +56,13 @@ export const getVolunteerFormOptions = async (userId: string) => {
   );
 
   const userAlreadySubmitted = formSections.some(
-    (section) => section.alreadySelected
+    (section) => section.alreadySelected?.length
   );
 
   interface CategoryChoices {
     [key: string]: {
       label: string;
-      id: string;
+      id: number;
       selected: boolean;
     }[];
   }

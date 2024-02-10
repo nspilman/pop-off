@@ -18,7 +18,6 @@ const unsubscribe = async (onSuccess: any, formData: FormData) => {
     email: data?.[0].email,
     unsubscription_reason: formData.get("reason") || "",
   });
-  console.log({ insertError });
   if ((await insertError) === null) {
     const { error } = await supabase.rpc("delete_user");
     onSuccess();

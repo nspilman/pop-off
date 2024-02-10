@@ -13,6 +13,14 @@ import { handleVolunteerFormSubmission } from "../actions";
 import { TOAST_REDIRECT_KEY } from "@/constants";
 import { Layout } from "@/components/Layout/layout";
 import { getSession } from "@/utils/supabase/getSession";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -62,24 +70,46 @@ export default async function Index() {
           <p className="pb-2 font-bold">You can help in the following ways:</p>
           <div className="flex space-x-8">
             <CopyShareLink link={shareLink} />
-            <button className="border p-2">
-              Pledge to help when the song is released
-            </button>
-            <button className="border p-2">Provide market insights</button>
+            <Dialog>
+              <DialogTrigger>
+                <span className="border p-2">Pledge to help</span>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Are you absolutely sure?</DialogTitle>
+                  <DialogDescription>
+                    <VolunteerOptionsForm
+                      sections={sections}
+                      userAlreadySubmitted={userAlreadySubmitted}
+                      handleVolunteerFormSubmission={
+                        handleVolunteerFormSubmission
+                      }
+                      hiddenFields={{ userId, songId }}
+                    />
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+
+            <Dialog>
+              <DialogTrigger>
+                <span className="border p-2">Provide insights</span>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Are you absolutely sure?</DialogTitle>
+                  <DialogDescription>
+                    <AdditionalFeedbackForm userId={session.user.id} />
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
         <p className="text-gray-500">
           Or if you didn't like the song and don't want to hear from us -
         </p>
-        {/* 
-        <VolunteerOptionsForm
-          sections={sections}
-          userAlreadySubmitted={userAlreadySubmitted}
-          handleVolunteerFormSubmission={handleVolunteerFormSubmission}
-          hiddenFields={{ userId, songId }}
-        />
 
-        <AdditionalFeedbackForm userId={session.user.id} /> */}
         <UnsubscribeForm />
       </div>
     </Layout>
