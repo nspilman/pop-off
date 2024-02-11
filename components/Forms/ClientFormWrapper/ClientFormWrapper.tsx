@@ -42,7 +42,10 @@ export const ClientFormWrapper = ({
     }
   };
 
-  const className = buttonPosition === "below" ? "flex-col" : "items-center";
+  const className =
+    buttonPosition === "below"
+      ? "flex-col"
+      : "flex-col md:flex-row md:items-center";
 
   return (
     <form className={`space-y-4 flex ${className}`} onSubmit={handleSubmit}>

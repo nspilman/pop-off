@@ -10,11 +10,11 @@ interface Props {
 
 export const Layout = ({ children, bgClass }: Props) => (
   <RootLayout>
-    <div className="py-6 md:py-12 lg:py-16 xl:py-24 bg-[#f5f5f5] px-8">
-      <div className="container px-4 md:px-6 flex">
-        <div className="pr-8">
+    <div className="bg-[#f5f5f5] px-8 my-8">
+      <div className="container px-4 md:px-6 flex flex-col md:flex-row items-center justify-center">
+        <div className="py-8 md:mr-8">
           <div
-            className={`${bgClass} bg-loop flex items-center content-center justify-center p-8 pl-12 min-w-[400px]`}
+            className={`${bgClass} bg-loop flex items-center content-center justify-center p-8 pl-12 min-w-[225px] sm:min-w-[400px] md:min-w-[300px] lg:min-w-[450px]`}
           >
             <img
               alt="Song cover"
@@ -25,10 +25,11 @@ export const Layout = ({ children, bgClass }: Props) => (
         </div>
         {children}
       </div>
+      <div className="w-screen flex items-center content-center justify-center p-4">
+        <SocialMediaLinks />
+      </div>
     </div>
-    <div className="w-screen flex items-center content-center justify-center p-4">
-      <SocialMediaLinks />
-    </div>
+
     <Toaster />
     <ToastQuerystringMonitor />
   </RootLayout>

@@ -24,13 +24,10 @@ export default async function Index({
 
   return (
     <Layout bgClass="bg-falling-stars">
-      <div className="flex flex-col justify-center space-y-4">
+      <div className="flex flex-col justify-center items-center md:items-start space-y-4">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-black">
-            Listen to{" "}
-            <i>
-              <u>Falling</u>
-            </i>
+          <h1 className="text-lg font-bold tracking-tighter sm:text-3xl md:text-3xl xl:text-6xl/none text-black">
+            Listen to <i>Falling</i>
             {"  "}
             by Toneway
           </h1>
@@ -45,7 +42,7 @@ export default async function Index({
             ever email you about our music.
           </p>
         </div>
-        <div className="mt-4 text-gray-500 md:text-md dark:text-gray-500">
+        <div className="pt-4 text-gray-500 md:text-md dark:text-gray-500">
           <p className="pb-2 font-bold">
             We're so excited for you to hear this track.
           </p>

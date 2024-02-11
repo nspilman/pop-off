@@ -16,8 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={ GeistSans.className}>
-      <body className="bg-background text-foreground lg:p-20">{children}</body>
+    <html lang="en" className={GeistSans.className}>
+      <body className="bg-background text-foreground lg:p-12 w-screen">
+        {children}
+      </body>
     </html>
   );
 }

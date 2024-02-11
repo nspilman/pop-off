@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "./ui/button";
+
 interface Props {
   link: string;
 }
@@ -16,8 +18,11 @@ export const CopyShareLink = ({ link }: Props) => {
     }
   };
   return (
-    <button className="border p-2" onClick={() => copyToClipboard(link)}>
+    <Button
+      className="border py-2 px-12 w-full"
+      onClick={() => copyToClipboard(link)}
+    >
       Share this pre-release
-    </button>
+    </Button>
   );
 };

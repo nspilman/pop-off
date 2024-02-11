@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const SONG_STREAMING_URL =
   "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
@@ -52,13 +53,10 @@ export default async function Index() {
             Listen to our new song before it's officially released.
           </p>
           <HLSAudioPlayer src={SONG_STREAMING_URL} />
-          <div className="mt-8">
-            <div className="w-full" />
-          </div>
         </section>
 
         <div className="mt-4 text-gray-500 md:text-md dark:text-gray-500 pb-8">
-          <p className="pb-2 font-bold">What do you think? Love it?</p>
+          <p className="pb-2 font-bold">What do you think? It is a jam?</p>
           <p className="pb-2">
             If so, we humbly ask for your help. With essentially infinite new
             songs released daily on streaming services, we're looking for an
@@ -68,11 +66,15 @@ export default async function Index() {
             listening profiles.
           </p>
           <p className="pb-2 font-bold">You can help in the following ways:</p>
-          <div className="flex space-x-8">
-            <CopyShareLink link={shareLink} />
+          <div className="flex space-x-8 flex-col w-full items-center ">
+            <div className="ml-8 w-full">
+              <CopyShareLink link={shareLink} />
+            </div>
             <Dialog>
-              <DialogTrigger>
-                <span className="border p-2">Pledge to help</span>
+              <DialogTrigger asChild>
+                <Button className="border p-2 w-full">
+                  See ways you can help on Release Day
+                </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
@@ -92,8 +94,8 @@ export default async function Index() {
             </Dialog>
 
             <Dialog>
-              <DialogTrigger>
-                <span className="border p-2">Provide insights</span>
+              <DialogTrigger asChild>
+                <Button className="border p-2 w-full">Provide insights</Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
