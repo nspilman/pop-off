@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "../ui/button";
+
 export const SubmitButton = ({
   label,
   disabled = false,
@@ -10,13 +12,13 @@ export const SubmitButton = ({
   pending?: boolean;
 }) => {
   return (
-    <button
+    <Button
       type="submit"
       className={`border ${pending ? "text-gray-400" : "white"} p-2`}
       disabled={disabled}
       style={{ marginTop: "unset" }}
     >
       {!pending ? label : "loading"}
-    </button>
+    </Button>
   );
 };
