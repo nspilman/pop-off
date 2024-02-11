@@ -43,7 +43,7 @@ export default async function Index() {
   const songId = songInfo?.[0].song_id.toString() || "";
 
   return (
-    <Layout bgClass="bg-falling-stars">
+    <Layout bgClass="bg-music">
       <div className="flex-1 flex flex-col items-center justify-center py-6 md:py-12 lg:py-16">
         <section className="w-full max-w-md mx-auto text-center flex flex-col items-center">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
