@@ -24,7 +24,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 const SONG_STREAMING_URL =
-  "https://d3qxyro07qwbpl.cloudfront.net/falling/output.m3u8";
+  "https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/falling_stream/output.m3u8";
 
 export default async function Index() {
   const session = await getSession();
