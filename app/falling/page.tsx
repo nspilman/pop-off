@@ -22,6 +22,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { sendTrackingEvent } from "@/components/tracking";
+import { Modal } from "@/components/Modal";
 
 const SONG_STREAMING_URL =
   "https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/falling_stream/output.m3u8";
@@ -33,6 +35,8 @@ export default async function Index() {
       `/?${TOAST_REDIRECT_KEY}=${"Oops - you can only access the song via access link sent to your email. Type your email in the form to get started."}`
     );
   }
+
+  sendTrackingEvent({ type: "falling_page_land" });
 
   const shareLink = await generateShareToken();
 
@@ -70,42 +74,29 @@ export default async function Index() {
             <div className="ml-8 w-full">
               <CopyShareLink link={shareLink} />
             </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="border p-2 w-full">
-                  See ways you can help on Release Day
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Are you absolutely sure?</DialogTitle>
-                  <DialogDescription>
-                    <VolunteerOptionsForm
-                      sections={sections}
-                      userAlreadySubmitted={userAlreadySubmitted}
-                      handleVolunteerFormSubmission={
-                        handleVolunteerFormSubmission
-                      }
-                      hiddenFields={{ userId, songId }}
-                    />
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
-
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="border p-2 w-full">Provide insights</Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Are you absolutely sure?</DialogTitle>
-                  <DialogDescription>
-                    <AdditionalFeedbackForm userId={session.user.id} />
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+            <Modal
+              buttonLabel="See ways you can help on Release Day"
+              eventStrings={{
+                open: "pledge_survey_open",
+                close: "pledge_survey_close",
+              }}
+            >
+              <VolunteerOptionsForm
+                sections={sections}
+                userAlreadySubmitted={userAlreadySubmitted}
+                handleVolunteerFormSubmission={handleVolunteerFormSubmission}
+                hiddenFields={{ userId, songId }}
+              />
+            </Modal>
+            <Modal
+              buttonLabel="Provide insights"
+              eventStrings={{
+                open: "market_research_survey_open",
+                close: "market_research_survey_close",
+              }}
+            >
+              <AdditionalFeedbackForm userId={session.user.id} />
+            </Modal>
           </div>
         </div>
         <p className="text-gray-500">

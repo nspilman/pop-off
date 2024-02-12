@@ -3,6 +3,7 @@ import { MultiSelectForm } from "@/components/MultiselectForm";
 import { ClientFormWrapper } from "../ClientFormWrapper";
 import { useState } from "react";
 import { FormReturn } from "@/types";
+import { sendTrackingEvent } from "@/components/tracking";
 
 interface Props {
   userAlreadySubmitted: boolean;
@@ -30,6 +31,9 @@ export const VolunteerOptionsForm = ({
       action={handleVolunteerFormSubmission}
       disabled={isDisabled}
       setDisabled={setIsDisbled}
+      trackSubmission={() =>
+        sendTrackingEvent({ type: "pledge_survey_completion" })
+      }
     >
       <MultiSelectForm
         sections={sections}

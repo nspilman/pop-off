@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ClientFormWrapper } from "../ClientFormWrapper";
 import { FormReturn } from "@/types";
+import { sendTrackingEvent } from "@/components/tracking";
 
 interface Props {
   submitListenerFeedback(formData: FormData): Promise<FormReturn>;
@@ -28,6 +29,9 @@ export const FormBody = ({
       action={submitListenerFeedback}
       disabled={disabled}
       setDisabled={setDisabled}
+      trackSubmission={() =>
+        sendTrackingEvent({ type: "market_research_survey_completion" })
+      }
     >
       <>
         {formSections?.map((field, i) => (

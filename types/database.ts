@@ -62,7 +62,6 @@ export type Database = {
           hashed_user_id: string
           id: number
           payload: Json | null
-          release_id: string
         }
         Insert: {
           event_date: string
@@ -70,7 +69,6 @@ export type Database = {
           hashed_user_id: string
           id?: number
           payload?: Json | null
-          release_id: string
         }
         Update: {
           event_date?: string
@@ -78,7 +76,6 @@ export type Database = {
           hashed_user_id?: string
           id?: number
           payload?: Json | null
-          release_id?: string
         }
         Relationships: []
       }
@@ -375,6 +372,11 @@ export type Database = {
         | "market_research_survey_completion"
         | "unsubscribe_initial"
         | "unsubscribe_final"
+        | "song_update_time"
+        | "pledge_survey_close"
+        | "market_research_survey_open"
+        | "market_research_survey_close"
+        | "share_link_copy"
       input_type: "text_area" | "text" | "checkbox"
       volunteer_action_category:
         | "Stream"

@@ -12,6 +12,7 @@ interface Props {
   setDisabled?: (isDisabled: boolean) => void;
   submitButtonLabel?: string;
   buttonPosition?: "below" | "right";
+  trackSubmission?: () => void;
 }
 export const ClientFormWrapper = ({
   children,
@@ -20,6 +21,7 @@ export const ClientFormWrapper = ({
   setDisabled,
   submitButtonLabel,
   buttonPosition = "below",
+  trackSubmission,
 }: Props) => {
   const { toast } = useToast();
 
@@ -27,6 +29,7 @@ export const ClientFormWrapper = ({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    trackSubmission?.();
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     setPending(true);

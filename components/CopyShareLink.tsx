@@ -1,7 +1,7 @@
 "use client";
 
+import { sendTrackingEvent } from "./tracking";
 import { Button } from "./ui/button";
-import { useToast } from "./ui/use-toast";
 
 interface Props {
   link: string;
@@ -9,6 +9,7 @@ interface Props {
 export const CopyShareLink = ({ link }: Props) => {
   const copyToClipboard = async (text: string) => {
     const endpoint = `${process.env.NEXT_PUBLIC_BASE_URL}/?referral=${text}`;
+    sendTrackingEvent({ type: "share_link_copy" });
     try {
       await navigator.clipboard.writeText(endpoint);
       alert(
