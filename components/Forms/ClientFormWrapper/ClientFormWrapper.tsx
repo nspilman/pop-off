@@ -13,7 +13,7 @@ interface Props {
   submitButtonLabel?: string;
   buttonPosition?: "below" | "right";
   trackSubmission?: () => void;
-  SubmittedView: () => React.ReactElement;
+  SubmittedView?: () => React.ReactElement;
   onSuccess?: () => void;
 }
 export const ClientFormWrapper = ({
@@ -56,7 +56,11 @@ export const ClientFormWrapper = ({
   return (
     <>
       {disabled ? (
-        <SubmittedView />
+        SubmittedView ? (
+          <SubmittedView />
+        ) : (
+          <>Submitted!</>
+        )
       ) : (
         <form className={`space-y-4 flex ${className}`} onSubmit={handleSubmit}>
           {/* Thank you so much for your submission. */}
