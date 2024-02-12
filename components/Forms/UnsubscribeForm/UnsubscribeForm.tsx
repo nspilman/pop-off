@@ -38,10 +38,15 @@ export const UnsubscribeForm = () => {
   const action = unsubscribe.bind(null, () => router.push("/"));
   return isClicked ? (
     <form action={action}>
-      <input name="reason" placeholder="Why tho?"></input>
-      <button>Confirm Unsubsribe</button>
+      <button className="text-xs" onClick={() => setIsClicked(false)}>
+        x
+      </button>{" "}
+      <input name="reason" placeholder="Why tho?" className="text-xs"></input>
+      <button className="text-xs">Confirm Unsubsribe</button>
     </form>
   ) : (
-    <button onClick={onInitialClick}>Unsubscribe</button>
+    <button onClick={onInitialClick} className="text-xs mt-1 text-gray-500">
+      Unsubscribe
+    </button>
   );
 };

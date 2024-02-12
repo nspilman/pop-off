@@ -31,7 +31,9 @@ export const Modal = ({ buttonLabel, eventStrings, children }: Props) => {
   return (
     <Dialog onOpenChange={handleStateChange}>
       <DialogTrigger asChild>
-        <Button className="border p-2 w-full">{buttonLabel}</Button>
+        <Button className="border p-2 w-full" variant="secondary">
+          {buttonLabel}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

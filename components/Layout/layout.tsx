@@ -2,6 +2,7 @@ import RootLayout from "@/app/layout";
 import { SocialMediaLinks } from "../SocialMediaLinks";
 import { Toaster } from "@/components/ui/toaster";
 import { ToastQuerystringMonitor } from "@/components/ToastQuerystringMonitor";
+import { UnsubscribeForm } from "../Forms";
 
 interface Props {
   children: React.ReactElement;
@@ -26,7 +27,10 @@ export const Layout = ({ children, bgClass }: Props) => (
         {children}
       </div>
       <div className="w-screen flex items-center content-center justify-center p-4">
-        <SocialMediaLinks />
+        <div className="flex flex-col justify-center items-center">
+          <SocialMediaLinks />
+          <UnsubscribeForm />
+        </div>
       </div>
     </div>
 
