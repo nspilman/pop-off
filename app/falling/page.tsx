@@ -1,11 +1,9 @@
 import HLSAudioPlayer from "@/components/HLSAudioPlayer";
 import { redirect } from "next/navigation";
-import { SVGProps } from "react";
 import { generateShareToken } from "@/utils/generateShareLink";
 import { CopyShareLink } from "@/components/CopyShareLink";
 import {
   VolunteerOptionsForm,
-  UnsubscribeForm,
   AdditionalFeedbackForm,
 } from "@/components/Forms";
 import { getVolunteerFormOptions } from "@/components/Forms/VolunteerOptionsForm/getVolunteerFormOptions";
@@ -13,15 +11,7 @@ import { handleVolunteerFormSubmission } from "../actions";
 import { TOAST_REDIRECT_KEY } from "@/constants";
 import { Layout } from "@/components/Layout/layout";
 import { getSession } from "@/utils/supabase/getSession";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+
 import { sendTrackingEvent } from "@/components/tracking";
 import { Modal } from "@/components/Modal";
 
@@ -47,7 +37,7 @@ export default async function Index() {
   const songId = songInfo?.[0].song_id.toString() || "";
 
   return (
-    <Layout bgClass="bg-music">
+    <Layout bgClass="bg-music" showUnsubscribe>
       <div className="flex-1 flex flex-col items-center justify-center py-6 md:py-12 lg:py-16">
         <section className="w-full max-w-md mx-auto text-center flex flex-col items-center">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">

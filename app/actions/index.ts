@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { SONG_ID } from "../constants";
 import { EMAIL_FORM_ERRORS } from "@/constants";
 import { FormReturn } from "@/types";
+import { revalidatePath } from "next/cache";
 
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -100,6 +101,7 @@ export async function handleVolunteerFormSubmission(
     deleteError,
   });
   if (!error) {
+    revalidatePath("/falling");
     return { status: "Success", message: "you did it!" };
   }
   return {
@@ -149,6 +151,7 @@ export async function submitListenerFeedback(
     };
   }
 
+  revalidatePath("/falling");
   return {
     status: "Success",
     message: "Thank you for submitting your thoughts and information!!",

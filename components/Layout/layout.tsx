@@ -7,9 +7,10 @@ import { UnsubscribeForm } from "../Forms";
 interface Props {
   children: React.ReactElement;
   bgClass: "bg-falling-stars" | "bg-music";
+  showUnsubscribe?: boolean;
 }
 
-export const Layout = ({ children, bgClass }: Props) => (
+export const Layout = ({ children, bgClass, showUnsubscribe }: Props) => (
   <RootLayout>
     <div className="bg-[#f5f5f5] px-8 my-8">
       <div className="container px-4 md:px-6 flex flex-col md:flex-row items-center justify-center">
@@ -29,7 +30,7 @@ export const Layout = ({ children, bgClass }: Props) => (
       <div className="w-screen flex items-center content-center justify-center p-4">
         <div className="flex flex-col justify-center items-center">
           <SocialMediaLinks />
-          <UnsubscribeForm />
+          {showUnsubscribe && <UnsubscribeForm />}
         </div>
       </div>
     </div>

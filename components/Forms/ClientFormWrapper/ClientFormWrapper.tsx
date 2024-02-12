@@ -9,19 +9,22 @@ interface Props {
   children: React.ReactElement;
   action: (formData: FormData) => Promise<FormReturn>;
   disabled?: boolean;
-  setDisabled?: (isDisabled: boolean) => void;
+  disableForm?: () => void;
   submitButtonLabel?: string;
   buttonPosition?: "below" | "right";
   trackSubmission?: () => void;
+  SubmittedView: () => React.ReactElement;
+  onSuccess?: () => void;
 }
 export const ClientFormWrapper = ({
   children,
   action,
   disabled,
-  setDisabled,
   submitButtonLabel,
   buttonPosition = "below",
   trackSubmission,
+  SubmittedView,
+  onSuccess,
 }: Props) => {
   const { toast } = useToast();
 
@@ -41,7 +44,7 @@ export const ClientFormWrapper = ({
       variant: status === "Success" ? "default" : "destructive",
     });
     if (status === "Success") {
-      setDisabled && setDisabled(true);
+      onSuccess?.();
     }
   };
 
@@ -51,19 +54,20 @@ export const ClientFormWrapper = ({
       : "flex-col md:flex-row md:items-center";
 
   return (
-    <form className={`space-y-4 flex ${className}`} onSubmit={handleSubmit}>
-      {/* Thank you so much for your submission. */}
-      {disabled && setDisabled && (
-        <button type="button" onClick={() => setDisabled && setDisabled(false)}>
-          Edit?{" "}
-        </button>
+    <>
+      {disabled ? (
+        <SubmittedView />
+      ) : (
+        <form className={`space-y-4 flex ${className}`} onSubmit={handleSubmit}>
+          {/* Thank you so much for your submission. */}
+          {children}
+          <SubmitButton
+            label={submitButtonLabel || "Submit"}
+            disabled={disabled}
+            pending={pending}
+          />
+        </form>
       )}
-      {children}
-      <SubmitButton
-        label={submitButtonLabel || "Submit"}
-        disabled={disabled}
-        pending={pending}
-      />
-    </form>
+    </>
   );
 };
