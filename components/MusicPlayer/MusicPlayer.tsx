@@ -64,6 +64,15 @@ export const AudioPlayer = ({ src }: { src: string }) => {
             },
           })
         }
+        onEnded={(e) =>
+          sendTrackingEvent({
+            type: "song_end",
+            payload: {
+              timestamp: getTimestamp(e.target as HTMLAudioElement),
+              track: "peekneek",
+            },
+          })
+        }
       />
     </div>
   );
@@ -88,20 +97,9 @@ function UI({
       }
     };
 
-    const onEnded = (e: Event) => {
-      setIsPlaying(false);
-      sendTrackingEvent({
-        type: "song_end",
-        payload: {
-          timestamp: getTimestamp(e.target as HTMLAudioElement),
-          track: "peekneek",
-        },
-      });
-    };
-
     if (audioEl) {
       audioEl.addEventListener("timeupdate", updateProgress);
-      audioEl.addEventListener("ended", (e) => onEnded(e));
+      audioEl.addEventListener("ended", () => setIsPlaying(false));
     }
 
     return () => {
