@@ -1,4 +1,3 @@
-import HLSAudioPlayer from "@/components/HLSAudioPlayer";
 import { redirect } from "next/navigation";
 import { generateShareToken } from "@/utils/generateShareLink";
 import { CopyShareLink } from "@/components/CopyShareLink";
@@ -14,6 +13,7 @@ import { getSession } from "@/utils/supabase/getSession";
 
 import { sendTrackingEvent } from "@/components/tracking";
 import { Modal } from "@/components/Modal";
+import { AudioPlayer } from "@/components/MusicPlayer/MusicPlayer";
 
 const SONG_STREAMING_URL =
   "https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/falling_stream/output.m3u8";
@@ -46,7 +46,7 @@ export default async function Index() {
           <p className="mt-4 text-gray-500">
             Listen to our new song before it's officially released.
           </p>
-          <HLSAudioPlayer src={SONG_STREAMING_URL} />
+          <AudioPlayer src={SONG_STREAMING_URL} />
         </section>
 
         <div className="mt-4 text-gray-500 md:text-md dark:text-gray-500 pb-8">
