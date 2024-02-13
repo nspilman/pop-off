@@ -46,7 +46,7 @@ export default async function Index() {
           <p className="mt-4 text-gray-500">
             Listen to our new song before it's officially released.
           </p>
-          <AudioPlayer src={SONG_STREAMING_URL} />
+          <AudioPlayer src={SONG_STREAMING_URL} title={"FALLING / TONEWAY"} />
         </section>
 
         <div className="mt-4 text-gray-500 md:text-md dark:text-gray-500 pb-8">

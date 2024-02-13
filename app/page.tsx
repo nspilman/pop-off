@@ -40,7 +40,10 @@ export default async function Index({
           </p>
         </div>
         <div className="w-full max-w-sm space-y-2">
-          <AudioPlayer src={SONG_STREAMING_URL} />
+          <AudioPlayer
+            src={SONG_STREAMING_URL}
+            title={"FALLING (PREVIEW) / TONEWAY"}
+          />
 
           <EmailSignupForm referral={referral} />
           <p className="text-xs text-gray-500 dark:text-gray-400">

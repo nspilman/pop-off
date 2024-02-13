@@ -7,7 +7,7 @@ import { sendTrackingEvent } from "../tracking";
 
 const getTimestamp = (audio: HTMLAudioElement) => audio.currentTime;
 
-export const AudioPlayer = ({ src }: { src: string }) => {
+export const AudioPlayer = ({ src, title }: { src: string; title: string }) => {
   const audioRef = useRef<HTMLMediaElement>(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const AudioPlayer = ({ src }: { src: string }) => {
 
   return (
     <div>
-      <UI src={src} audio={audioRef} />
+      <UI audio={audioRef} title={title} />
       <audio
         ref={audioRef}
         controls
@@ -79,9 +79,10 @@ export const AudioPlayer = ({ src }: { src: string }) => {
 
 function UI({
   audio,
+  title,
 }: {
-  src: string;
   audio: React.RefObject<HTMLMediaElement>;
+  title: string;
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -154,9 +155,7 @@ function UI({
         <div className="flex flex-col space-between">
           <div>
             <div className="flex justify-between items-center h-full">
-              <div className="text-sm overflow-auto">
-                FALLING (PREVIEW) / TONEWAY
-              </div>
+              <div className="text-sm overflow-auto">{title}</div>
               <span className="text-xs">[MP3]</span>
             </div>
             <div className="text-sm overflow-auto">
