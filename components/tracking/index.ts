@@ -38,15 +38,12 @@ export const sendTrackingEvent = async ({ type, payload }: Props) => {
   const {
     data: { user },
   } = await supabaseClient.auth.getUser();
-  if (!user) {
-    return;
-  }
+
   const { error } = await supabaseClient.from("events").insert({
     event_date: startOfDay(new Date()).toDateString(),
-    hashed_user_id: encryptString(
-      user.id,
-      process.env.NEXT_PUBLIC_MARKETING_SALT || ""
-    ),
+    hashed_user_id: user?.id
+      ? encryptString(user.id, process.env.NEXT_PUBLIC_MARKETING_SALT || "")
+      : "Anonymous",
     event_type: type,
     payload,
   });

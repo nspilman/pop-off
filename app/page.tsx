@@ -2,6 +2,7 @@
 
 import { EmailSignupForm } from "@/components/Forms/EmailSignupForm";
 import { Layout } from "@/components/Layout/layout";
+import { AudioPlayer } from "@/components/MusicPlayer/MusicPlayer";
 import { getSession } from "@/utils/supabase/getSession";
 import { redirect } from "next/navigation";
 
@@ -22,9 +23,12 @@ export default async function Index({
   }
   const referral = searchParams?.referral as string;
 
+  const SONG_STREAMING_URL =
+    "https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/falling_stream/speekneek/output.m3u8";
+
   return (
     <Layout bgClass="bg-falling-stars">
-      <div className="flex flex-col justify-center items-center md:items-start space-y-4">
+      <div className="flex flex-col justify-center items-center md:items-start space-y-4 pt-8">
         <div className="space-y-2">
           <h1 className="text-lg font-bold tracking-tighter sm:text-3xl md:text-3xl xl:text-6xl/none text-black">
             Listen to <i>Falling</i>
@@ -36,6 +40,8 @@ export default async function Index({
           </p>
         </div>
         <div className="w-full max-w-sm space-y-2">
+          <AudioPlayer src={SONG_STREAMING_URL} />
+
           <EmailSignupForm referral={referral} />
           <p className="text-xs text-gray-500 dark:text-gray-400">
             You will receive a link to the song page in your email. We'll only

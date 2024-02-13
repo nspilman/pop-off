@@ -20,7 +20,7 @@ export const Layout = ({ children, bgClass, showUnsubscribe }: Props) => (
           >
             <img
               alt="Song cover"
-              className="rotate-back-and-forth"
+              className="rotate-back-and-forth user-select-none"
               src="https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/FallingJack.png?t=2024-02-07T06%3A27%3A43.659Z"
             />
           </div>
