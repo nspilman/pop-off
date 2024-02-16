@@ -86,6 +86,7 @@ function UI({
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     const audioEl = audio.current;
@@ -98,6 +99,9 @@ function UI({
     };
 
     if (audioEl) {
+      audioEl.addEventListener("loadedmetadata", (e) =>
+        setDuration((e.target as HTMLAudioElement).duration)
+      );
       audioEl.addEventListener("timeupdate", updateProgress);
       audioEl.addEventListener("ended", () => setIsPlaying(false));
     }
@@ -159,10 +163,8 @@ function UI({
               <span className="text-xs">[MP3]</span>
             </div>
             <div className="text-sm overflow-auto">
-              {formatTime(
-                Math.round((progress * (audio.current?.duration || 0)) / 100)
-              )}{" "}
-              / {formatTime(Math.round(audio.current?.duration || 0))}
+              {formatTime(Math.round((progress * (duration || 0)) / 100))} /{" "}
+              {formatTime(Math.round(duration || 0))}
             </div>
           </div>
 
