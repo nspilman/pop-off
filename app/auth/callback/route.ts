@@ -46,8 +46,10 @@ export async function GET(request: Request) {
     if (!error) {
       return NextResponse.redirect(`${origin}${redirect}`);
     }
-    NextResponse.redirect(`/?${TOAST_REDIRECT_KEY}=${error?.message}`);
+    NextResponse.redirect(`${origin}/?${TOAST_REDIRECT_KEY}=${error?.message}`);
   }
-  NextResponse.redirect(`/?${TOAST_REDIRECT_KEY}=${"Invalid login token"}`);
+  NextResponse.redirect(
+    `${origin}/?${TOAST_REDIRECT_KEY}=${"Invalid login token. code:" + code}`
+  );
   // return the user to an error page with instructions
 }
