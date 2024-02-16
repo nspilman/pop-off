@@ -10,6 +10,7 @@ export async function GET(request: Request) {
   // if "next" is in param, use it as the redirect URL
   const redirect = searchParams.get("redirect") ?? "/";
   const referral = searchParams.get("referral");
+  const successRedirect = process.env.NEXT_PUBLIC_BASE_URL + (redirect || "");
 
   if (code) {
     const cookieStore = cookies();
@@ -44,12 +45,16 @@ export async function GET(request: Request) {
       }
     }
     if (!error) {
-      return NextResponse.redirect(`${origin}${redirect}`);
+      return NextResponse.redirect(successRedirect);
     }
-    NextResponse.redirect(`${origin}/?${TOAST_REDIRECT_KEY}=${error?.message}`);
+    NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/?${TOAST_REDIRECT_KEY}=${error?.message}`
+    );
   }
   NextResponse.redirect(
-    `${origin}/?${TOAST_REDIRECT_KEY}=${"Invalid login token. code:" + code}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/?${TOAST_REDIRECT_KEY}=${
+      "Invalid login token. code:" + code
+    }`
   );
   // return the user to an error page with instructions
 }
