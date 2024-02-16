@@ -4,7 +4,8 @@ const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Toneway | Seattle-based Pop Group",
+  title:
+    "Toneway | Seattle-based Pop Group | Listen to Falling before it's released to the public",
   favicon: "./favicon.ico",
   description:
     "Listen to Falling by Toneway before the song hits the major streaming platforms",

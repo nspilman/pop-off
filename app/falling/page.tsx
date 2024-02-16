@@ -68,7 +68,7 @@ export default async function Index() {
                 <CopyShareLink link={shareLink} />
               </div>
               <Modal
-                buttonLabel="See ways you can help on Release Day"
+                buttonLabel="Let us know how you'll help"
                 eventStrings={{
                   open: "pledge_survey_open",
                   close: "pledge_survey_close",
