@@ -13,6 +13,9 @@ module.exports = {
           background: "hsl(var(--btn-background))",
           "background-hover": "hsl(var(--btn-background-hover))",
         },
+        animation: {
+          "spin-slow": "spin 3s linear infinite", // Customize the speed here
+        },
       },
     },
   },

@@ -51,7 +51,7 @@ export const ClientFormWrapper = ({
   const className =
     buttonPosition === "below"
       ? "flex-col"
-      : "flex-col md:flex-row md:items-center";
+      : "flex-col lg:flex-row items-center md:items-start";
 
   return (
     <>

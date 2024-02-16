@@ -48,6 +48,7 @@ export async function sendSignInLinkToEmail(
     },
   });
   if (error) {
+    //TODO
     return { status: "Error", message: "ERROR!!!" };
   }
   return {
