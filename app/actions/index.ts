@@ -35,24 +35,13 @@ export async function sendSignInLinkToEmail(
     };
   }
 
-  const redirectUrl = encodeURIComponent("/falling");
-  const referral = formData.get("referral")?.toString();
-
-  const emailRedirectTo = `${
-    process.env.NEXT_PUBLIC_BASE_URL
-  }/auth/callback?redirect=${redirectUrl}${
-    referral ? "&referral=" + referral : ""
-  }`;
+  console.log({ email });
 
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
-    options: {
-      emailRedirectTo,
-    },
   });
   if (error) {
-    //TODO
-    return { status: "Error", message: "ERROR!!!" };
+    return { status: "Error", message: error.message };
   }
   return {
     status: "Success",

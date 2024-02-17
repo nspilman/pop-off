@@ -49,7 +49,7 @@ export const FormBody = ({
         sendTrackingEvent({ type: "market_research_survey_completion" })
       }
     >
-      <>
+      <div className="max-h-[80vh] overflow-scroll">
         {formSections?.map((field, i) => (
           <div
             className="space-y-2 flex flex-col"
@@ -60,13 +60,13 @@ export const FormBody = ({
               id={field.id.toString()}
               name={field.id.toString()}
               placeholder={field.placeholder}
-              className="text-black p-2 rounded"
+              className="text-black p-2 rounded min-h-36"
               defaultValue={field.defaultValue}
               disabled={disabled}
             />
           </div>
         ))}
-      </>
+      </div>
     </ClientFormWrapper>
   );
 };

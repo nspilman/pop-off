@@ -45,15 +45,16 @@ export const ClientFormWrapper = ({
     const formData = new FormData(form);
     setPending(true);
     const { status, message } = await action(formData);
-    setPending(false);
     toast({
       title: status,
       description: message,
       variant: status === "Success" ? "default" : "destructive",
     });
     if (status === "Success") {
+      console.log({ formData });
       onSuccess?.(formData);
     }
+    setPending(false);
   };
 
   const className =
