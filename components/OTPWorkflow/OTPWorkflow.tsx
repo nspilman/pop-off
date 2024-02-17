@@ -5,6 +5,7 @@ import { EmailSignupForm } from "../Forms";
 import { ClientFormWrapper } from "../Forms/ClientFormWrapper";
 import { FormReturn } from "@/types";
 import { redirect } from "next/navigation";
+import { Label } from "../ui/label";
 
 type WorkflowState = "getCode" | "postCode";
 
@@ -43,8 +44,10 @@ export const OTPWorkflow = ({ referral, actions }: Props) => {
         onSuccess={() => redirect("/falling")}
       >
         <div>
+          <label htmlFor="token">Your one time code</label>
           <input
             name="token"
+            id="token"
             required
             placeholder="Check your email for your one time code!"
             className="w-full p-2"

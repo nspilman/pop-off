@@ -45,8 +45,9 @@ export default async function Index({
             src={SONG_STREAMING_URL}
             title={"FALLING (PREVIEW) / TONEWAY"}
           />
-          <div className="mt-2 lg:pl-16 lg:ml-2">
+          <div className="mt-2 lg:ml-2">
             <OTPWorkflow
+              referral={referral}
               actions={{
                 getOTPCode: sendSignInLinkToEmail,
                 loginWithOTPCode: loginWithOtp,

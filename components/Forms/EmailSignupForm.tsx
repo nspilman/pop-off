@@ -15,15 +15,18 @@ export const EmailSignupForm = ({ onSubmit, getOTPCode }: Props) => {
       submitButtonLabel="Get Your Access Code"
       onSuccess={onSubmit}
     >
-      <>
+      <div>
+        <label htmlFor="email">
+          Provide your email to access the full song
+        </label>
         <input
           className="max-w-lg flex-1 text-black border-bottom borderrounded border-black p-2 w-full lg:mr-2 shadow lg:w-72"
-          placeholder="Enter your email for the whole song"
+          placeholder="thomyork@example.com"
           type="email"
           name="email"
           required
         />
-      </>
+      </div>
     </ClientFormWrapper>
   );
 };
