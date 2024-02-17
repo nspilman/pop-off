@@ -175,7 +175,11 @@ export async function loginWithOtp(formData: FormData): Promise<FormReturn> {
     type: "email",
   });
   if (error) {
-    return { status: "Error", message: "Unable to log in" };
+    return {
+      status: "Error",
+      message:
+        "That access code didn't work. Make sure you're using the most recent one emailed to you, as the previous ones expire when a new one is created.",
+    };
   }
 
   if (referral && data) {

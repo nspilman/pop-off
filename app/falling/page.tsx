@@ -17,7 +17,7 @@ import { AudioPlayer } from "@/components/MusicPlayer/MusicPlayer";
 import { getAdditionalFeedbackFormOptions } from "@/components/Forms/AdditionalFeedbackForm/getAdditionalFeedbackFormOptions";
 
 const SONG_STREAMING_URL =
-  "https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/falling_stream/output.m3u8";
+  "https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/falling_stream/master/output.m3u8";
 
 export default async function Index() {
   const session = await getSession();

@@ -4,6 +4,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { SubmitButton } from "../SubmitButton";
 import { FormEvent, useState } from "react";
 import { FormReturn } from "@/types";
+import { Button } from "@/components/ui/button";
 
 type OnSuccess = (e: FormData) => void | (() => void);
 
@@ -17,6 +18,10 @@ interface Props {
   trackSubmission?: () => void;
   SubmittedView?: () => React.ReactElement;
   onSuccess?: OnSuccess;
+  secondary?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 export const ClientFormWrapper = ({
   children,
@@ -27,6 +32,7 @@ export const ClientFormWrapper = ({
   trackSubmission,
   SubmittedView,
   onSuccess,
+  secondary,
 }: Props) => {
   const { toast } = useToast();
 
@@ -67,11 +73,18 @@ export const ClientFormWrapper = ({
         <form className={`space-y-4 flex ${className}`} onSubmit={handleSubmit}>
           {/* Thank you so much for your submission. */}
           {children}
-          <SubmitButton
-            label={submitButtonLabel || "Submit"}
-            disabled={disabled}
-            pending={pending}
-          />
+          <div>
+            <SubmitButton
+              label={submitButtonLabel || "Submit"}
+              disabled={disabled}
+              pending={pending}
+            />
+            {secondary && (
+              <Button onClick={secondary.onClick} variant="ghost">
+                {secondary.label}
+              </Button>
+            )}
+          </div>
         </form>
       )}
     </>

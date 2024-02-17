@@ -42,6 +42,10 @@ export const OTPWorkflow = ({ referral, actions }: Props) => {
       <ClientFormWrapper
         action={actions.loginWithOTPCode}
         onSuccess={() => redirect("/falling")}
+        secondary={{
+          label: "Go back",
+          onClick: () => setWorkflowState("getCode"),
+        }}
       >
         <div>
           <label htmlFor="token">Your one time code</label>
