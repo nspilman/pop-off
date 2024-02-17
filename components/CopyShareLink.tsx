@@ -3,6 +3,7 @@
 import { sendTrackingEvent } from "./tracking";
 import { Button } from "./ui/button";
 import { CopyIcon } from "@radix-ui/react-icons";
+import { toast } from "./ui/use-toast";
 
 interface Props {
   link: string;
@@ -13,9 +14,11 @@ export const CopyShareLink = ({ link }: Props) => {
     sendTrackingEvent({ type: "share_link_copy" });
     try {
       await navigator.clipboard.writeText(endpoint);
-      alert(
-        "Copied to clipboard! Your unique share link is copied to your clipboard. When your friends access the site using your link, you'll get credit for the referral! The reward for now will be deep displays of us, but who knows, maybe we'll get stickers."
-      );
+      toast({
+        title: "Copied to Clipboard!",
+        description:
+          "Your unique share link is copied to your clipboard. When your friends access the site using your link, you'll get credit for the referral! The reward for now will be deep displays of us, but who knows, maybe we'll get stickers.",
+      });
     } catch (err) {
       console.error("Failed to copy: ", err);
     }

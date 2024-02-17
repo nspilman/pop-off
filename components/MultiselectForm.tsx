@@ -35,12 +35,12 @@ const FormBody = ({
   hiddenFields,
 }: Pick<Props, "sections" | "disabled" | "hiddenFields">) => {
   return (
-    <>
+    <div className="flex flex-col items-start w-full text-left">
       {Object.keys(hiddenFields).map((field) => (
         <input name={field} value={hiddenFields[field]} hidden key={field} />
       ))}
       {sections.map((section, index) => (
-        <div key={index}>
+        <div key={index} className="items-start w-full text-left py-2">
           <h3 className="py-1 font-bold">{section.title}</h3>
           {section.choices.map((choice, j) => (
             <div>
@@ -60,6 +60,6 @@ const FormBody = ({
           ))}
         </div>
       ))}
-    </>
+    </div>
   );
 };

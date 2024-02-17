@@ -48,7 +48,7 @@ export default async function Index() {
           <AudioPlayer src={SONG_STREAMING_URL} title={"FALLING / TONEWAY"} />
         </section>
 
-        <div className="mt-4 text-gray-500 md:text-md dark:text-gray-500 pb-8">
+        <div className="mt-4 px-8 text-gray-500 md:text-md dark:text-gray-500 pb-8">
           <p className="pb-2 font-bold">Be a part of the release</p>
           <p className="pb-2">
             Thank you for being here. We hope the song caught you by surprise,

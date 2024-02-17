@@ -54,20 +54,29 @@ export const VolunteerOptionsForm = ({
   );
 
   return (
-    <ClientFormWrapper
-      action={handleVolunteerFormSubmission}
-      disabled={isDisabled}
-      onSuccess={() => onFormSubmissionSuccess()}
-      trackSubmission={() =>
-        sendTrackingEvent({ type: "pledge_survey_completion" })
-      }
-      SubmittedView={SubmissionReviewComponent}
-    >
-      <MultiSelectForm
-        sections={sections}
+    <div className="h-[80vh] overflow-scroll">
+      <h2 className="text-xl font-bold">
+        Thank you for volunteering to help leading up to and on release weekend!
+      </h2>
+      <p className="py-1">
+        We've filled out a few "default" items for you, but please select or
+        deselect anything and everything.
+      </p>
+      <ClientFormWrapper
+        action={handleVolunteerFormSubmission}
         disabled={isDisabled}
-        hiddenFields={hiddenFields}
-      />
-    </ClientFormWrapper>
+        onSuccess={() => onFormSubmissionSuccess()}
+        trackSubmission={() =>
+          sendTrackingEvent({ type: "pledge_survey_completion" })
+        }
+        SubmittedView={SubmissionReviewComponent}
+      >
+        <MultiSelectForm
+          sections={sections}
+          disabled={isDisabled}
+          hiddenFields={hiddenFields}
+        />
+      </ClientFormWrapper>
+    </div>
   );
 };
