@@ -5,6 +5,8 @@ import { SubmitButton } from "../SubmitButton";
 import { FormEvent, useState } from "react";
 import { FormReturn } from "@/types";
 
+type OnSuccess = (e: FormData) => void | (() => void);
+
 interface Props {
   children: React.ReactElement;
   action: (formData: FormData) => Promise<FormReturn>;
@@ -14,7 +16,7 @@ interface Props {
   buttonPosition?: "below" | "right";
   trackSubmission?: () => void;
   SubmittedView?: () => React.ReactElement;
-  onSuccess?: () => void;
+  onSuccess?: OnSuccess;
 }
 export const ClientFormWrapper = ({
   children,
@@ -44,7 +46,7 @@ export const ClientFormWrapper = ({
       variant: status === "Success" ? "default" : "destructive",
     });
     if (status === "Success") {
-      onSuccess?.();
+      onSuccess?.(formData);
     }
   };
 

@@ -1,4 +1,3 @@
-import { TOAST_REDIRECT_KEY } from "@/constants";
 import { decodeToken } from "@/utils/generateShareLink";
 import { createClient } from "@/utils/supabase/server";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -43,7 +42,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     // Handle potential errors
     return NextResponse.redirect(
       `${process.env.NEXT_PUBLIC_BASE_URL}/?${TOAST_REDIRECT_KEY}=${
-        "Invalid login token. code:" + token
+        "Invalid login token. code:" + code
       }`
     );
   }

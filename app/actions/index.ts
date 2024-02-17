@@ -1,9 +1,14 @@
+"use server";
+
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { SONG_ID } from "../constants";
 import { EMAIL_FORM_ERRORS } from "@/constants";
 import { FormReturn } from "@/types";
 import { revalidatePath } from "next/cache";
+import { decodeToken } from "@/utils/generateShareLink";
+import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -53,7 +58,7 @@ export async function sendSignInLinkToEmail(
   }
   return {
     status: "Success",
-    message: "Check your email for your login link!",
+    message: "Check your email for your login code!",
   };
 }
 
@@ -157,4 +162,33 @@ export async function submitListenerFeedback(
     status: "Success",
     message: "Thank you for submitting your thoughts and information!!",
   };
+}
+
+export async function loginWithOtp(formData: FormData): Promise<FormReturn> {
+  "use server";
+  const cookieStore = cookies();
+  const supabaseClient = await createClient(cookieStore);
+  const email = formData.get("email")?.toString() || "";
+  const token = formData.get("token")?.toString() || "";
+  const referral = formData.get("referral")?.toString() || "";
+  const { data, error } = await supabaseClient.auth.verifyOtp({
+    email,
+    token,
+    type: "email",
+  });
+  if (error) {
+    return { status: "Error", message: "Unable to log in" };
+  }
+
+  if (referral && data) {
+    const { user } = data;
+    const referringUserId = decodeToken(referral);
+    if (user?.id && referringUserId !== user.id) {
+      const { data, error } = await supabaseClient.from("referrals").insert({
+        referring_user_id: referringUserId,
+        referred_user: user.id,
+      });
+    }
+  }
+  return NextResponse.redirect("/falling");
 }

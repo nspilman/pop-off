@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { createClient } from "../../../utils/supabase/server";
 import { SONG_ID } from "@/app/constants";
-import { Tables } from "@/types";
 
 type MarketResearchField = {
   id: string;

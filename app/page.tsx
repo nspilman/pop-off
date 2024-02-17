@@ -1,10 +1,11 @@
 "use server";
 
-import { EmailSignupForm } from "@/components/Forms/EmailSignupForm";
 import { Layout } from "@/components/Layout/layout";
 import { AudioPlayer } from "@/components/MusicPlayer/MusicPlayer";
+import { OTPWorkflow } from "@/components/OTPWorkflow/OTPWorkflow";
 import { getSession } from "@/utils/supabase/getSession";
 import { redirect } from "next/navigation";
+import { loginWithOtp, sendSignInLinkToEmail } from "@/app/actions";
 
 export default async function Index({
   searchParams,
@@ -45,7 +46,12 @@ export default async function Index({
             title={"FALLING (PREVIEW) / TONEWAY"}
           />
           <div className="mt-2 lg:pl-16 lg:ml-2">
-            <EmailSignupForm referral={referral} />
+            <OTPWorkflow
+              actions={{
+                getOTPCode: sendSignInLinkToEmail,
+                loginWithOTPCode: loginWithOtp,
+              }}
+            />
             <p className="text-xs text-gray-500 dark:text-gray-400">
               You will receive a link to the song page in your email. We'll only
               ever email you about our music.

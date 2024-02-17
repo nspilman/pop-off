@@ -1,13 +1,30 @@
 import { submitListenerFeedback } from "@/app/actions";
 
-import { getAdditionalFeedbackFormOptions } from "./getAdditionalFeedbackFormOptions";
 import { FormBody } from "./FormBody";
 
 interface Props {
   userId: string;
+  getAdditionalFeedbackFormOptions: (userId: string) => Promise<{
+    formSections: {
+      id: number;
+      label: string;
+      placeholder: string;
+      order: number;
+      defaultValue: string;
+    }[];
+    songInfo:
+      | {
+          song_id: number;
+        }[]
+      | null;
+    userAlreadySubmitted: boolean;
+  }>;
 }
 
-export const AdditionalFeedbackForm = async ({ userId }: Props) => {
+export const AdditionalFeedbackForm = async ({
+  userId,
+  getAdditionalFeedbackFormOptions,
+}: Props) => {
   const { formSections, userAlreadySubmitted } =
     await getAdditionalFeedbackFormOptions(userId);
 

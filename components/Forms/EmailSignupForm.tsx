@@ -1,12 +1,19 @@
-import { sendSignInLinkToEmail } from "@/app/actions";
+"use client";
 import { ClientFormWrapper } from "./ClientFormWrapper";
+import { FormReturn } from "@/types";
 
-export const EmailSignupForm = ({ referral }: { referral?: string }) => {
+interface Props {
+  onSubmit: (e: FormData) => void;
+  getOTPCode: (formData: FormData) => Promise<FormReturn>;
+}
+
+export const EmailSignupForm = ({ onSubmit, getOTPCode }: Props) => {
   return (
     <ClientFormWrapper
-      action={sendSignInLinkToEmail}
+      action={getOTPCode}
       buttonPosition="right"
-      submitButtonLabel="Get Your Access Link"
+      submitButtonLabel="Get Your Access Code"
+      onSuccess={onSubmit}
     >
       <>
         <input
@@ -16,7 +23,6 @@ export const EmailSignupForm = ({ referral }: { referral?: string }) => {
           name="email"
           required
         />
-        {referral && <input hidden name="referral" value={referral} />}
       </>
     </ClientFormWrapper>
   );

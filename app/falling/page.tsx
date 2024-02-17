@@ -14,6 +14,7 @@ import { getSession } from "@/utils/supabase/getSession";
 import { sendTrackingEvent } from "@/components/tracking";
 import { Modal } from "@/components/Modal";
 import { AudioPlayer } from "@/components/MusicPlayer/MusicPlayer";
+import { getAdditionalFeedbackFormOptions } from "@/components/Forms/AdditionalFeedbackForm/getAdditionalFeedbackFormOptions";
 
 const SONG_STREAMING_URL =
   "https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/falling_stream/output.m3u8";
@@ -88,7 +89,12 @@ export default async function Index() {
                   close: "market_research_survey_close",
                 }}
               >
-                <AdditionalFeedbackForm userId={session.user.id} />
+                <AdditionalFeedbackForm
+                  userId={session.user.id}
+                  getAdditionalFeedbackFormOptions={
+                    getAdditionalFeedbackFormOptions
+                  }
+                />
               </Modal>
             </div>
           </div>
