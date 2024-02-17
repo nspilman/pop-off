@@ -40,28 +40,36 @@ export default async function Index() {
   return (
     <Layout bgClass="bg-music" showUnsubscribe>
       <div className="flex-1 flex flex-col items-center justify-center py-6 md:py-12 lg:py-16">
-        <section className="w-full max-w-md mx-auto text-center flex flex-col items-center">
+        <section className="w-full max-w-md mx-auto text-center flex flex-col items-center mb-12">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
             Falling by Toneway
           </h1>
-          <p className="mt-4 text-gray-500">
-            Listen to our new song before it's officially released.
-          </p>
+          {/* <p className="mt-4 text-gray-500">Please enjoy</p> */}
           <AudioPlayer src={SONG_STREAMING_URL} title={"FALLING / TONEWAY"} />
         </section>
 
         <div className="mt-4 text-gray-500 md:text-md dark:text-gray-500 pb-8">
-          <p className="pb-2 font-bold">What do you think? It is a jam?</p>
+          <p className="pb-2 font-bold">Be a part of the release</p>
           <p className="pb-2">
-            If so, we humbly ask for your help. With essentially infinite new
-            songs released daily on streaming services, we're looking for an
-            army of listeners (a Tonewave?) when the song drops to cut through
-            the noise. The goal is to get the attention of the robot tastemakers
-            to start recommending the song to new listeners with similar
-            listening profiles.
+            Thank you for being here. We hope the song caught you by surprise,
+            made you bob your head and put a smile on your face. A lot of time
+            and laughter on our end went into making it for you.
+          </p>
+          <p className="pb-2">
+            We've released the song on our website before it hits the streaming
+            services to build a more concrete fanbase. With your email signup,
+            you've joined the Toneway fanclub of sorts. (The Tonewave? The
+            Tonewarriors? Options are endless) We'll send out updates on songs,
+            merchandise, calls to action, etc. If that sounds lame, unsubcribe
+            below.
+          </p>
+          <p className="pb-2">
+            You may say to yourself - "I've got my boogie board and I'm ready to
+            ride the ToneWave (and I don't care what they say about falling) -
+            but what's next? How can I help?" Well, ToneWizards -
           </p>
           <div>
-            <p className="pb-2 font-bold mt-12">
+            <p className="pb-2 font-bold">
               You can help in the following ways:
             </p>
             <div className="flex space-x-8 flex-col w-full items-center ">
@@ -69,7 +77,7 @@ export default async function Index() {
                 <CopyShareLink link={shareLink} />
               </div>
               <Modal
-                buttonLabel="Let us know how you'll help"
+                buttonLabel="Volunteer to stream and share"
                 eventStrings={{
                   open: "pledge_survey_open",
                   close: "pledge_survey_close",
@@ -99,11 +107,10 @@ export default async function Index() {
             </div>
           </div>
         </div>
-        <p className="text-gray-500">
-          We'll email you about the song release. If you didn't like the song
-          and don't want to hear from us, unsubscribe below. Thanks for spending
-          time with us, and hope to grab your ear again.
-        </p>
+        {/* <p className="text-gray-500">
+          We'll email you about the song release. Thanks for spending time with
+          us, and hope to grab your ear again. 
+        </p> */}
       </div>
     </Layout>
   );

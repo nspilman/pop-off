@@ -2,6 +2,7 @@
 
 import { sendTrackingEvent } from "./tracking";
 import { Button } from "./ui/button";
+import { CopyIcon } from "@radix-ui/react-icons";
 
 interface Props {
   link: string;
@@ -23,8 +24,9 @@ export const CopyShareLink = ({ link }: Props) => {
     <Button
       className="border py-2 px-12 w-full"
       onClick={() => copyToClipboard(link)}
+      variant="ghost"
     >
-      Share this pre-release
+      Send this song to a friend <CopyIcon />
     </Button>
   );
 };
