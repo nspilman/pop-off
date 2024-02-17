@@ -7,8 +7,6 @@ import { EMAIL_FORM_ERRORS } from "@/constants";
 import { FormReturn } from "@/types";
 import { revalidatePath } from "next/cache";
 import { decodeToken } from "@/utils/generateShareLink";
-import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
 
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -58,7 +56,7 @@ export async function sendSignInLinkToEmail(
   }
   return {
     status: "Success",
-    message: "Check your email for your login code!",
+    message: "Check your email for your login link!",
   };
 }
 
@@ -190,5 +188,5 @@ export async function loginWithOtp(formData: FormData): Promise<FormReturn> {
       });
     }
   }
-  return NextResponse.redirect("/falling");
+  return { status: "Success", message: "Successfully logged in" };
 }
