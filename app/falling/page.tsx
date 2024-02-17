@@ -58,15 +58,15 @@ export default async function Index() {
           <p className="pb-2">
             We've released the song on our website before it hits the streaming
             services to build a more concrete fanbase. With your email signup,
-            you've joined the Toneway fanclub of sorts. (The Tonewave? The
-            Tonewarriors? Options are endless) We'll send out updates on songs,
-            merchandise, calls to action, etc. If that sounds lame, unsubcribe
-            below.
+            you've joined the Toneway fanclub of sorts. (The <i>Tonewave</i>?
+            The <i>Tonewarriors?</i> Options are endless) We'll send out updates
+            on songs, merchandise, calls to action, etc. If that sounds lame,
+            unsubcribe below.
           </p>
           <p className="pb-2">
             You may say to yourself - "I've got my boogie board and I'm ready to
             ride the ToneWave (and I don't care what they say about falling) -
-            but what's next? How can I help?" Well, ToneWizards -
+            but what's next? How can I help?" Well, <i>ToneWizards</i>,
           </p>
           <div>
             <p className="pb-2 font-bold">
