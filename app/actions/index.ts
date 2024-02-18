@@ -36,10 +36,19 @@ export async function sendSignInLinkToEmail(
   }
 
   const emailRedirectTo = `${process.env.NEXT_PUBLIC_BASE_URL}`;
+  const referringUserHash = formData.get("referralHash")?.toString();
+  const referringUserId = referringUserHash?.length
+    ? decodeToken(referringUserHash)
+    : undefined;
 
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo, data: { pioneer: "we out here" } },
+    options: {
+      emailRedirectTo,
+      data: referringUserId
+        ? { referring_user_id: referringUserId }
+        : undefined,
+    },
   });
   if (error) {
     return { status: "Error", message: error.message };
