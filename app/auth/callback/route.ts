@@ -11,6 +11,10 @@ export async function GET(request: NextRequest) {
   const redirectTo = request.nextUrl.clone();
   redirectTo.pathname = next;
 
+  if (redirectTo.port === "80") {
+    redirectTo.port = ""; // Remove the default port
+  }
+
   if (token_hash && type) {
     const cookieStore = cookies();
     const supabase = createServerClient(
@@ -38,10 +42,9 @@ export async function GET(request: NextRequest) {
 
     if (data) {
       const { user } = data;
-      if(user){
-        const metadata = user 
+      if (user) {
+        const metadata = user;
       }
-      
     }
 
     if (!error) {
