@@ -39,7 +39,7 @@ export async function sendSignInLinkToEmail(
 
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo },
+    options: { emailRedirectTo, data: { pioneer: "we out here" } },
   });
   if (error) {
     return { status: "Error", message: error.message };
