@@ -35,10 +35,11 @@ export async function sendSignInLinkToEmail(
     };
   }
 
-  console.log({ email });
+  const emailRedirectTo = `${process.env.NEXT_PUBLIC_BASE_URL}`;
 
   const { error } = await supabaseClient.auth.signInWithOtp({
     email,
+    options: { emailRedirectTo },
   });
   if (error) {
     return { status: "Error", message: error.message };

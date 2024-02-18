@@ -55,13 +55,6 @@ export const VolunteerOptionsForm = ({
 
   return (
     <div className="h-[80vh] overflow-scroll">
-      <h2 className="text-xl font-bold">
-        Thank you for volunteering to help leading up to and on release weekend!
-      </h2>
-      <p className="py-1">
-        We've filled out a few "default" items for you, but please select or
-        deselect anything and everything.
-      </p>
       <ClientFormWrapper
         action={handleVolunteerFormSubmission}
         disabled={isDisabled}
