@@ -36,7 +36,7 @@ export async function sendSignInLinkToEmail(
   }
 
   const emailRedirectTo = `${process.env.NEXT_PUBLIC_BASE_URL}`;
-  const referringUserHash = formData.get("referralHash")?.toString();
+  const referringUserHash = formData.get("referral")?.toString();
   const referringUserId = referringUserHash?.length
     ? decodeToken(referringUserHash)
     : undefined;

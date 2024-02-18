@@ -1,4 +1,5 @@
 "use client";
+import { useSearchParams } from "next/navigation";
 import { ClientFormWrapper } from "./ClientFormWrapper";
 import { FormReturn } from "@/types";
 
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export const EmailSignupForm = ({ onSubmit, getOTPCode }: Props) => {
+  const params = useSearchParams();
+  const referral = params.get("referral");
   return (
     <ClientFormWrapper
       action={getOTPCode}
@@ -26,6 +29,7 @@ export const EmailSignupForm = ({ onSubmit, getOTPCode }: Props) => {
           name="email"
           required
         />
+        {referral && <input name="referral" value={referral} hidden />}
       </div>
     </ClientFormWrapper>
   );
