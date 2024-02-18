@@ -44,10 +44,12 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    Sentry.captureMessage(redirectTo.pathname);
+    const redirectUrl = `${process.env.NEXT_PUBLIC_BASE_URL}${redirectTo.pathname}`;
+
+    Sentry.captureMessage(redirectUrl);
 
     if (!error) {
-      return NextResponse.redirect(redirectTo.pathname);
+      return NextResponse.redirect(redirectUrl);
     }
   }
 
