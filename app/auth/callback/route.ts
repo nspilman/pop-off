@@ -2,6 +2,7 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -10,10 +11,6 @@ export async function GET(request: NextRequest) {
   const next = searchParams.get("next") ?? "/";
   const redirectTo = request.nextUrl.clone();
   redirectTo.pathname = next;
-
-  if (redirectTo.port === "80") {
-    redirectTo.port = ""; // Remove the default port
-  }
 
   if (token_hash && type) {
     const cookieStore = cookies();
@@ -47,8 +44,10 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    Sentry.captureMessage(redirectTo.pathname);
+
     if (!error) {
-      return NextResponse.redirect(redirectTo);
+      return NextResponse.redirect(redirectTo.pathname);
     }
   }
 
