@@ -147,44 +147,8 @@ export type Database = {
             referencedColumns: ["song_id"]
           },
           {
-            foreignKeyName: "market_research_responses_user_id_fkey"
+            foreignKeyName: "public_market_research_responses_user_id_fkey"
             columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["user_id"]
-          }
-        ]
-      }
-      referrals: {
-        Row: {
-          created_at: string
-          id: number
-          referred_user: string | null
-          referring_user_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          referred_user?: string | null
-          referring_user_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          referred_user?: string | null
-          referring_user_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "referrals_referred_user_fkey"
-            columns: ["referred_user"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["user_id"]
-          },
-          {
-            foreignKeyName: "referrals_referring_user_id_fkey"
-            columns: ["referring_user_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["user_id"]
@@ -298,6 +262,7 @@ export type Database = {
           name: string | null
           other_user_details: string | null
           phone_number: string | null
+          referring_user_id: string | null
           user_id: string
         }
         Insert: {
@@ -305,6 +270,7 @@ export type Database = {
           name?: string | null
           other_user_details?: string | null
           phone_number?: string | null
+          referring_user_id?: string | null
           user_id: string
         }
         Update: {
@@ -312,9 +278,17 @@ export type Database = {
           name?: string | null
           other_user_details?: string | null
           phone_number?: string | null
+          referring_user_id?: string | null
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "users_referring_user_fkey"
+            columns: ["referring_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["user_id"]
+          },
           {
             foreignKeyName: "users_user_id_fkey"
             columns: ["user_id"]

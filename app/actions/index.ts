@@ -167,7 +167,6 @@ export async function loginWithOtp(formData: FormData): Promise<FormReturn> {
   const supabaseClient = await createClient(cookieStore);
   const email = formData.get("email")?.toString() || "";
   const token = formData.get("token")?.toString() || "";
-  const referral = formData.get("referral")?.toString() || "";
   const { data, error } = await supabaseClient.auth.verifyOtp({
     email,
     token,
@@ -181,15 +180,5 @@ export async function loginWithOtp(formData: FormData): Promise<FormReturn> {
     };
   }
 
-  if (referral && data) {
-    const { user } = data;
-    const referringUserId = decodeToken(referral);
-    if (user?.id && referringUserId !== user.id) {
-      const { data, error } = await supabaseClient.from("referrals").insert({
-        referring_user_id: referringUserId,
-        referred_user: user.id,
-      });
-    }
-  }
   return { status: "Success", message: "Successfully logged in" };
 }

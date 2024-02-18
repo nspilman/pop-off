@@ -57,7 +57,6 @@ export const OTPWorkflow = ({ referral, actions }: Props) => {
             className="w-full p-2"
           />
           <input name="email" value={email} hidden />
-          {referral && <input name="referral" value={referral} hidden />}
         </div>
       </ClientFormWrapper>
     );
