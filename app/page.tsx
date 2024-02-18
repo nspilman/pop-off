@@ -54,8 +54,7 @@ export default async function Index({
               }}
             />
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              You will receive a link to the song page in your email. We'll only
-              ever email you about our music.
+              You will receive a link to the song page in your email.
             </p>
           </div>
         </div>

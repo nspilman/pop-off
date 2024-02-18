@@ -61,17 +61,16 @@ export default async function Index() {
             you've joined the Toneway fanclub of sorts. (The <i>Tonewave</i>?
             The <i>Tonewarriors?</i> Options are endless) We'll send out updates
             on songs, merchandise, calls to action, etc. If that sounds lame,
-            unsubcribe below.
+            unsubcribe below. We'll never give anyone your email - on Radiohead
+            and Kendrick Lamar.
           </p>
           <p className="pb-2">
             You may say to yourself - "I've got my boogie board and I'm ready to
             ride the ToneWave (and I don't care what they say about falling) -
-            but what's next? How can I help?" Well, <i>ToneWizards</i>,
+            but what's next? How can I help?" Well, <i>ToneWizards</i>,{" "}
+            <b> You can help in the following ways:</b>
           </p>
           <div>
-            <p className="pb-2 font-bold">
-              You can help in the following ways:
-            </p>
             <div className="flex space-x-8 flex-col w-full items-center ">
               <div className="ml-8 w-full">
                 <CopyShareLink link={shareLink} />

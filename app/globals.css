@@ -29,3 +29,28 @@
 .bg-music {
   background-image: url('https://pgxxxhjpdbarogibubuk.supabase.co/storage/v1/object/public/Toneway/fallingLongsmoller.png?t=2024-02-16T04%3A40%3A16.191Z');
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  min-width: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+/* 
+body {
+  min-height: 100dvh;
+} */
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
