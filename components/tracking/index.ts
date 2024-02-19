@@ -48,5 +48,4 @@ export const sendTrackingEvent = async ({ type, payload }: Props) => {
     payload,
   });
 
-  console.log({ error });
 };

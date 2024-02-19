@@ -51,7 +51,6 @@ export const ClientFormWrapper = ({
       variant: status === "Success" ? "default" : "destructive",
     });
     if (status === "Success") {
-      console.log({ formData });
       onSuccess?.(formData);
     }
     setPending(false);
