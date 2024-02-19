@@ -24,7 +24,7 @@ export const EmailSignupForm = ({ onSubmit, getOTPCode }: Props) => {
         </label>
         <input
           className="max-w-lg flex-1 text-black border-bottom borderrounded border-black p-2 w-full lg:mr-2 shadow lg:w-72"
-          placeholder="thomyork@example.com"
+          placeholder="thomyorke@tonewaymusic.com"
           type="email"
           name="email"
           required
