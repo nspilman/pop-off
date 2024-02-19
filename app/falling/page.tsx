@@ -70,40 +70,49 @@ export default async function Index() {
             but what's next? How can I help?" Well, <i>ToneWizards</i>,{" "}
             <b> You can help in the following ways:</b>
           </p>
-          <div>
-            <div className="flex space-x-8 flex-col w-full items-center ">
-              <div className="ml-8 w-full">
-                <CopyShareLink link={shareLink} />
-              </div>
-              <Modal
-                buttonLabel="Volunteer to stream and share"
-                eventStrings={{
-                  open: "pledge_survey_open",
-                  close: "pledge_survey_close",
-                }}
+          <div className="flex space-x-8 flex-col w-full items-center ">
+            <p>
+              First, if you have Spotify - please{" "}
+              <a
+                href="https://distrokid.com/hyperfollow/toneway/falling"
+                target="_blank"
+                className="text-blue-800"
               >
-                <VolunteerOptionsForm
-                  sections={sections}
-                  userAlreadySubmitted={userAlreadySubmitted}
-                  handleVolunteerFormSubmission={handleVolunteerFormSubmission}
-                  hiddenFields={{ userId, songId }}
-                />
-              </Modal>
-              <Modal
-                buttonLabel="Provide insights"
-                eventStrings={{
-                  open: "market_research_survey_open",
-                  close: "market_research_survey_close",
-                }}
-              >
-                <AdditionalFeedbackForm
-                  userId={session.user.id}
-                  getAdditionalFeedbackFormOptions={
-                    getAdditionalFeedbackFormOptions
-                  }
-                />
-              </Modal>
+                pre-save the song here.
+              </a>
+              <p>Next:</p>
+            </p>
+            <div className="ml-8 w-full">
+              <CopyShareLink link={shareLink} />
             </div>
+            <Modal
+              buttonLabel="Volunteer to stream and share"
+              eventStrings={{
+                open: "pledge_survey_open",
+                close: "pledge_survey_close",
+              }}
+            >
+              <VolunteerOptionsForm
+                sections={sections}
+                userAlreadySubmitted={userAlreadySubmitted}
+                handleVolunteerFormSubmission={handleVolunteerFormSubmission}
+                hiddenFields={{ userId, songId }}
+              />
+            </Modal>
+            <Modal
+              buttonLabel="Provide insights"
+              eventStrings={{
+                open: "market_research_survey_open",
+                close: "market_research_survey_close",
+              }}
+            >
+              <AdditionalFeedbackForm
+                userId={session.user.id}
+                getAdditionalFeedbackFormOptions={
+                  getAdditionalFeedbackFormOptions
+                }
+              />
+            </Modal>
           </div>
         </div>
         {/* <p className="text-gray-500">
