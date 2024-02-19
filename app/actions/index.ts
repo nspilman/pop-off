@@ -99,10 +99,6 @@ export async function handleVolunteerFormSubmission(
     .from("user_volunteer_activities")
     .insert(selected);
 
-  console.log({
-    error,
-    deleteError,
-  });
   if (!error) {
     revalidatePath("/falling");
     return { status: "Success", message: "you did it!" };
