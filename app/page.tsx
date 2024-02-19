@@ -67,6 +67,11 @@ export default async function Index({
             market research and pledge to do what you can to promote the song on
             launch. However you can help, we're eternally grateful.{" "}
           </p>
+          <p>
+            Giving us your email will add you to our mailing list, but if the
+            full song doesn't meet your taste, we've made it easy to
+            unsubscribe.
+          </p>
           {/* <p className="pb-2">
             We're sharing this song early, so that when we release it on the
             streaming platforms, we'll have a fanbase (that's you!) ready to
