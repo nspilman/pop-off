@@ -17,7 +17,7 @@ export const SubmitButton = ({
       type="submit"
       className={`border ${
         pending ? "text-gray-400" : "white"
-      } p-2 w-full lg:w-40`}
+      } p-2 w-full h-[40px] lg:w-40 mt-4`}
       disabled={disabled}
       style={{ marginTop: "unset" }}
     >

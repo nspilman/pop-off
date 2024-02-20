@@ -59,7 +59,7 @@ export const ClientFormWrapper = ({
   const className =
     buttonPosition === "below"
       ? "flex-col"
-      : "flex-col  items-center md:items-start";
+      : "flex-col lg:flex-row items-end content-center ";
 
   return (
     <>
@@ -73,7 +73,7 @@ export const ClientFormWrapper = ({
         <form className={`space-y-4 flex ${className}`} onSubmit={handleSubmit}>
           {/* Thank you so much for your submission. */}
           {children}
-          <div>
+          <>
             <SubmitButton
               label={submitButtonLabel || "Submit"}
               disabled={disabled}
@@ -84,7 +84,7 @@ export const ClientFormWrapper = ({
                 {secondary.label}
               </Button>
             )}
-          </div>
+          </>
         </form>
       )}
     </>
