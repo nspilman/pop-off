@@ -61,7 +61,7 @@ export default async function Index() {
             you've joined the Toneway fanclub of sorts. (The <i>Tonewave</i>?
             The <i>Tonewarriors?</i> Options are endless) We'll send out updates
             on songs, merchandise, calls to action, etc. If that sounds lame,
-            unsubcribe below. We'll never give anyone your email - on Radiohead
+            unsubscribe below. We'll never give anyone your email - on Radiohead
             and Kendrick Lamar.
           </p>
           <p className="pb-2">
