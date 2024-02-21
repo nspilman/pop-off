@@ -7,6 +7,7 @@ import { EMAIL_FORM_ERRORS } from "@/constants";
 import { FormReturn } from "@/types";
 import { revalidatePath } from "next/cache";
 import { decodeToken } from "@/utils/generateShareLink";
+import * as Sentry from "@sentry/nextjs";
 
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -51,6 +52,7 @@ export async function sendSignInLinkToEmail(
     },
   });
   if (error) {
+    Sentry.captureException(error);
     return { status: "Error", message: error.message };
   }
   return {
