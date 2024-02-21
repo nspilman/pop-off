@@ -49,7 +49,7 @@ export default async function Index({
 
         <p className="text-s text-gray-500 dark:text-gray-500">
           If you like what you're hearing, we'll send you a link to access the
-          rest of the song. At the very least,{" "}
+          rest of the song. In addition -
           <a
             href="https://distrokid.com/hyperfollow/toneway/falling"
             target="_blank"
