@@ -46,6 +46,17 @@ export default async function Index() {
           </h1>
           {/* <p className="mt-4 text-gray-500">Please enjoy</p> */}
           <AudioPlayer src={SONG_STREAMING_URL} title={"FALLING / TONEWAY"} />
+          <p>
+            First, if you have Spotify - please{" "}
+            <a
+              href="https://distrokid.com/hyperfollow/toneway/falling"
+              target="_blank"
+              className="text-blue-800"
+            >
+              pre-save the song here.
+            </a>
+            <p>Next:</p>
+          </p>
         </section>
 
         <div className="mt-2 md:mt-4 px-8 text-gray-500 md:text-md dark:text-gray-500 pb-8">
@@ -71,17 +82,6 @@ export default async function Index() {
             <b> You can help in the following ways:</b>
           </p>
           <div className="flex space-x-8 flex-col w-full items-center ">
-            <p>
-              First, if you have Spotify - please{" "}
-              <a
-                href="https://distrokid.com/hyperfollow/toneway/falling"
-                target="_blank"
-                className="text-blue-800"
-              >
-                pre-save the song here.
-              </a>
-              <p>Next:</p>
-            </p>
             <div className="ml-8 w-full">
               <CopyShareLink link={shareLink} />
             </div>

@@ -49,13 +49,13 @@ export default async function Index({
 
         <p className="text-s text-gray-500 dark:text-gray-500">
           If you like what you're hearing, we'll send you a link to access the
-          rest of the song. In addition -
+          rest of the song. In addition - please{" "}
           <a
             href="https://distrokid.com/hyperfollow/toneway/falling"
             target="_blank"
             className="text-blue-400"
           >
-            please pre-save the song on Spotify.
+            pre-save the song on Spotify.
           </a>
         </p>
         <div className="mt-2 lg:ml-2">
